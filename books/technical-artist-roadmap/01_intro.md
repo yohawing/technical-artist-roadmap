@@ -55,11 +55,11 @@ title: "イントロダクション：テクニカルアーティストについ
 
 ### 基礎知識
 
-- [基礎知識：数学](https://zenn.dev/yohawing/books/b7167b92976b96/viewer/0c9332)
-- [基礎知識：物理](https://zenn.dev/yohawing/books/b7167b92976b96/viewer/92bf16)
-- [基礎知識：芸術](https://zenn.dev/yohawing/books/b7167b92976b96/viewer/734690)
-- [基礎知識：コンピューターサイエンス](https://zenn.dev/yohawing/books/b7167b92976b96/viewer/5abebc)
-- [基礎知識：グラフィックス](https://zenn.dev/yohawing/books/b7167b92976b96/viewer/ea9dbb)
+- [基礎知識：数学](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/02_math)
+- [基礎知識：物理](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/03_physics)
+- [基礎知識：芸術](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/04_art)
+- [基礎知識：コンピューターサイエンス](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/05_computer_science)
+- [基礎知識：グラフィックス](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/06_computer_graphics)
 - 応用：数学
 - 応用：物理
 - 応用：コンピューターサイエンス

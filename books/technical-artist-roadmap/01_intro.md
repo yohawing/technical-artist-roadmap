@@ -55,11 +55,11 @@ title: "イントロダクション：テクニカルアーティストについ
 
 ### 基礎知識
 
-- [基礎知識：数学](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/02_math)
-- [基礎知識：物理](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/03_physics)
-- [基礎知識：芸術](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/04_art)
-- [基礎知識：コンピューターサイエンス](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/05_computer_science)
-- [基礎知識：グラフィックス](https://zenn.dev/yohawing/books/technical-artist-roadmap/viewer/06_computer_graphics)
+- [基礎知識：数学](02_math)
+- [基礎知識：物理](03_physics)
+- [基礎知識：芸術](04_art)
+- [基礎知識：コンピューターサイエンス](05_computer_science)
+- [基礎知識：グラフィックス](06_computer_graphics)
 - 応用：数学
 - 応用：物理
 - 応用：コンピューターサイエンス
@@ -88,5 +88,6 @@ title: "イントロダクション：テクニカルアーティストについ
 # TAお役立ちリンク集
 
 https://ray-ta.notion.site/What-is-a-Technical-Artist-d15078e512334e6a829b7e307546efab
+
 https://discourse.techart.online/
 

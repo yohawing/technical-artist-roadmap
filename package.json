@@ -1,0 +1,9 @@
+{
+  "name": "technical-artist-roadmap",
+  "description": "https://zenn.dev/yohawing/books/b7167b92976b96",
+  "author": "yohawing <yohawing@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "zenn-cli": "^0.1.150"
+  }
+}

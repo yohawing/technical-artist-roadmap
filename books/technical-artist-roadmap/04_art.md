@@ -58,6 +58,8 @@ HVBは色を、色相（Hue）、彩度（Saturation）、明度（Brightness）
 
 トーンとは彩度と明度を揃えた色の調子のことで、人の受ける印象を大きく左右します。
 
+![about tone](/images/books/tar/art8.png)
+*[ICDカラーカラーデザイン公式ガイド［PDF版（基礎編 ）］](https://www.notion.so/8856e44e3a104aec935cfd4e0f0b46b2?pvs=21)より*
 
 ### コントラスト
 

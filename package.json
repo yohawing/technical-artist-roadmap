@@ -6,6 +6,6 @@
   "dependencies": {
     "@notionhq/client": "^2.2.14",
     "notion-to-md": "^3.1.1",
-    "zenn-cli": "^0.1.150"
+    "zenn-cli": "^0.1.153"
   }
 }

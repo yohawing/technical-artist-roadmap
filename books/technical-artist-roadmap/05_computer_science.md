@@ -1,10 +1,10 @@
 ---
-title: "基礎知識：コンピューターサイエンス（50％）"
+title: "基礎知識：コンピューターサイエンス（執筆中：85％）"
 emoji: "📟"
 published: true
 ---
     
-コンピューターサイエンスはコンピューターの仕組みや技術を知識体系としてまとめたものです。プログラミングで仕事をするうえで何となく身についている基礎知識がほとんどですが、意外と理解できてない知識などあるので一度さらっておくとよいでしょう。
+コンピューターサイエンスはコンピューターの仕組みや技術を知識体系としてまとめたものです。パソコンやプログラミングで仕事をする上で知っておくべき知識中心に紹介します。
 
 
 # アルゴリズムとデータ構造
@@ -16,25 +16,10 @@ published: true
 ## データ構造
 
 
-データ構造は、データを処理しやすい形に整えた構造のことです。アルゴリズムが料理しやすいようにデータを下処理するようなイメージですね。
+データ構造は、データを処理しやすい形に整えた構造のことです。アルゴリズムが料理しやすいようにデータを下処理するようなイメージですね
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/a5b3c047-dd4f-4157-8f7e-37ca7ea335b3/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094020Z&X-Amz-Expires=3600&X-Amz-Signature=1edda506c0c3711cb035a516f64ff9b0bd03cf2374d9d55d390bfad1aebb7502&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/9585ca36-117b-4d8c-8045-e3b6f07f2f06/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094020Z&X-Amz-Expires=3600&X-Amz-Signature=592e83daf68edb1f58282f5cbb94ce72696c8c312125301d991bb5ec49c0b32c&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/03fa4d8c-1e3e-4f26-a6ab-b446eb01090e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094021Z&X-Amz-Expires=3600&X-Amz-Signature=72ee8139f85a5b6d6e2c006362c4dbd1ab45427b062c04c3ea3b1153313f8b6f&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/4f3008a8-d0c2-4977-82fe-29a23824d3ff/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094021Z&X-Amz-Expires=3600&X-Amz-Signature=5cb712bfa5fe74a1315a2dbccba6d096e80fafa46434a7b7fcf38ccaecd6d684&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/fa9030df-0bd3-434a-8872-f6c2839d2bdd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094023Z&X-Amz-Expires=3600&X-Amz-Signature=029036c5b75d6ae831b7784ef82cede63c5e5082f59fe7bd8406aa8088623e5c&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/6ed293c3-72e9-4a83-b27a-f85bac288b52/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094023Z&X-Amz-Expires=3600&X-Amz-Signature=95454c93f1ccb7187035b2556f0f1daa224842404c2e472d77338309632f807f&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/80daa2c2-c982-4451-a9de-9ef8b9313541/Untitled.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=cc9d5379d6a565021c1bcf03634950eb5c10629120d47a1b0285fe6924a19c1e&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 - **配列（Array）**：一列に連なったデータのまとまりです。連続したメモリに格納されます。
 - **連想配列（Key-Value）**：関連性のある要素どうしを結びつけるデータ構造です。その際、標識となる要素のことを、**キー(key)**、対応する要素のことを**値(value)**と言います。DictionaryだったりHashTableだったり別名があります。
@@ -49,17 +34,11 @@ published: true
 
 アルゴリズムは、データを処理するルールのことです。一言でいうと簡単ですが、１＋１のような簡単なアルゴリズムから、複雑な問題をシンプルに解ける賢いアルゴリズムまで様々あります。ここでは基本的にはコンピューターが解きやすい問題を中心に取り扱います。
 
-- **ソート（並び替え）：**バブルソート、クイックソート、マージソート、選択ソート、挿入ソート、ヒープソート
-- **サーチ（探索）：**線形探索、二分探索（Binary Search）、四分木探索（Quadtree Search）、八分木探索（Octree Search）、文字列探索、ハッシュ関数
+- **ソート（並び替え）**：バブルソート、クイックソート、マージソート、選択ソート、挿入ソート、ヒープソート
+- **サーチ（探索）**：線形探索、二分探索（Binary Search）、四分木探索（Quadtree Search）、八分木探索（Octree Search）、文字列探索、ハッシュ関数
 - **グラフアルゴリズム**：グラフ理論に基づくアルゴリズムダイクストラ法（最短経路問題）、クラスカル法（最小全域木問題）、深さ優先探索（DFS）、幅優先探索（BFS）
 - **最適化アルゴリズム**:：特定の条件下で最適な解を見つけるアルゴリズム。例: 線形計画法、遺伝的アルゴリズム、シミュレーテッド・アニーリングなど。
 - **機械学習アルゴリズム**：機械学習で使われるアルゴリズム。k近傍法、決定木、ニューラルネットワーク、SVM、Transformerなど
-
-## 参考リンク
-
-
-[bookmark](https://sevendays-study.com/algorithm/)
-
 
 # ハードウェア
 
@@ -67,22 +46,13 @@ published: true
 ## 半導体と論理回路
 
 
-**半導体（トランジスタ）**は計算機を作る重要なパーツになります。
+半導体（トランジスタ）は計算機を作る重要なパーツになります。
 
 
 電流を流す、流さない（０と１）を制御できるので、**論理回路**（AND、OR、NOT、XOR）を組むことができます。この論理回路を使うと、四則演算（+−×÷）を行うことができます。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/051130d7-5ea1-47e2-891e-d3327b1beb1a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094024Z&X-Amz-Expires=3600&X-Amz-Signature=eb9be13373482544d6214b6056888f7b75da34827743c3a7556b580bc22df576&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2024-01-17_17.11.03.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/d53733f1-9f52-4317-a542-83a240afee38/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2024-01-17_17.11.03.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094024Z&X-Amz-Expires=3600&X-Amz-Signature=d50f50797e4308dfc73ef237bfa62b37f655fd1d293e66e3ee1a6afbc5bc02f0&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/4d216545-a5ac-46de-80ee-82640334ddc5/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=f3592171271f663cb6b1ad96e8d4d7f00ca1fa28bc6ed930e7669004a57bddc2&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-[bookmark](https://kouyama.sci.u-toyama.ac.jp/main/education/2012/isintro/pdf/text/text06.pdf)
+![dream2.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/5462d65e-aafe-4458-8e42-c5c36568e6ca/dream2.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=6a2badf9571694ff0a196f0b81ca876c5051b94656000fd7c0c005e7cdddd9c1&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ## CPU（Central Processing Unity）
@@ -91,11 +61,15 @@ published: true
 CPUは半導体の集合体です。主な機能は、シンプルには数値や論理的計算をすることなのですが、その計算により、プログラムの命令を実行し、コンピュータの各部分を制御することができます。。これにより、コンピュータは計算、データの処理、タスクの実行など、多様な作業をこなすことができます。
 
 
-CPUは一般に以下の主要なコンポーネントから構成されています：
+![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/4eaebf06-2836-4821-a106-921ab0f17e0b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=2f41b9842f808c71f0cdbea50d9cb2a33d52c7afd0ae523b15cc7506d3988664&X-Amz-SignedHeaders=host&x-id=GetObject)
+
+
+CPUは一般に以下の主要なコンポーネントから構成されています
 
 1. **演算処理ユニット（ALU）**：数学的な計算や論理的な操作を行います。
 2. **制御ユニット（CU）**：プログラムの命令を解読し、他のコンピュータ部品に指示を出す役割を担います。
 3. **レジスタ**：命令の実行中にデータを一時的に保存するための小さな記憶領域です。
+4. メモリユニット：メモリとやり取りをしてくれる部品です
 
 |  単語      | 意味                                                                                  |
 | -------- | ----------------------------------------------------------------------------------- |
@@ -103,11 +77,18 @@ CPUは一般に以下の主要なコンポーネントから構成されてい�
 | マルチコア    | 複数の処理を同時に行う能力。小さいCPUが沢山あるイメージ。                                                      |
 | マルチスレッド  | １つのコアで複数の処理を扱う能力。                                                                   |
 | キャッシュサイズ | レジスタより多くの情報を一時記憶するCPUに内蔵されているメモリ                                                    |
-| アーキテクチャ  | 命令セット（計算）やレジスタの仕様などの設計方法。x86,x64,ARMなどがある。                                          |
+| アーキテクチャ  | 命令セット（計算）やレジスタの仕様などの設計方法。
+x86,x64,ARMなどがある。                                         |
 | ビット      | ２進数の数の桁数。２のN乗。コンピュータの演算処理の単位。1ビット＝１バイト。たとえば、8ビットのアーキテクチャでは、1ビットで$2^{8}=256$を表現できる 。 |
 
 
+### CPUの動作の仕組み
+
+
 CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）、実行（Execute）」の3ステップのサイクルで成り立っています。これを理解することで、CPUがどのようにして命令を処理するかが分かります。
+
+
+![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/97a29cdb-ecd9-4cf0-a943-2f6c52ad28c0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=9f45025a8d1650828d708d1e70920f4b76cf14641c06a855588d73ad52fd3737&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 1. **フェッチ（Fetch）**:
 	- このステップでは、CPUはメモリから次に実行すべき命令を取得します。命令は通常、バイナリコード（0と1のシーケンス）の形で格納されています。
@@ -125,24 +106,28 @@ CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）
 GPUは、主に画像処理とレンダリングに特化したコンピュータのプロセッサです。もともとはビデオゲームや3Dグラフィックスを高速に処理するために設計されましたが、その高い計算能力と並列処理能力により、現在ではビデオ編集、画像処理、機械学習、ディープラーニングなど幅広い分野で使用されています。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/0bd0b23f-f307-4fda-be56-3bf8d8ba1c91/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=4643439f7998508ccd3becd4bf163e8af79db029dfa0b639ad33b60df623cd8a&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/cc431c5c-7b1d-4f60-bd46-12bbb2e88816/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=ff7ce747f0e4124d176d3b542366bb366558a38ccd0a62cb176be7dce7fe06bf&X-Amz-SignedHeaders=host&x-id=GetObject)
 
-1. **並列処理能力**:
-	- GPUは数百から数千の小さなコアを持っており、これにより複数の計算処理を同時に行うことができます。この並列処理能力は、特に大量のデータを扱う作業や、同じ処理を多数のデータポイントに適用するような作業に適しています。
-2. **高速なグラフィックス処理**:
-	- GPUは画像データの高速処理に特化しており、3Dグラフィックスレンダリング、ビデオエンコーディング、画像処理などのタスクを高速に実行できます。これは、ゲーム、仮想現実（VR）、映画制作などの分野で特に重要です。
-3. **汎用性**:
-	- 近年、GPUは「汎用計算」（GPGPU: General-Purpose computing on Graphics Processing Units）にも使用されるようになりました。これは、グラフィックス以外の計算作業、特に科学計算や機械学習、ディープラーニングに関連するタスクに応用されています。
-4. **CPUとの連携**:
-	- GPUはCPUと連携して動作します。CPUが全体的なコンピュータの制御や複雑なタスクを担い、GPUは並列処理が必要な特定のタスクを効率的に処理します。
+
+GPUは数百から数千の小さなコアを持っており、これにより複数の計算処理を同時に行うことができます。この並列処理能力は、特に大量のデータを扱う作業や、同じ処理を多数のデータポイントに適用するような作業に適しています。
+
+
+### GPGPU
+
+
+GPGPU（General-Purpose computing on Graphics Processing Units）はGPUの計算資源を汎用的に使えるようにする機能です。これは、グラフィックス以外の計算作業、特にパーティクル計算や機械学習などのタスクに応用されています。
+
 
 ## メモリ
 
 
-そもそもメモリとは「Random Access Memory（RAM）」のこと。 **主記憶装置とも呼ばれ、CPUと直接つながっていて、CPUが計算や処理をする場合に、一時的に情報を記憶しておく場所**の事です。 パソコンの心臓部であるCPUと超高速でやり取りしながらデータの処理を行っているのです。
+そもそもメモリとは「Random Access Memory（RAM）」のこと。 主記憶装置とも呼ばれ、CPUと直接つながっていて、**CPUが計算や処理をする場合に、一時的に情報を記憶しておく場所**の事です。 パソコンの心臓部であるCPUと超高速でやり取りしながらデータの処理を行っているのです。
 
 
 このメモリはデータやプログラムコードの一時的な保存場所として使用され、CPUが直接アクセスしてデータの読み書きを行います
+
+
+![メモリはよく机の上に例えられる。](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/8d613a44-ce56-4c43-9ae3-4263195ee545/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=770c4432636933d8ca0bfcdf8433367bfe322679fec796da2e2af3fad511aae8&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 RAMの速度はコンピュータの全体的なパフォーマンスに大きな影響を与え、メモリ容量が多いほど、より多くのプログラムやデータを同時に処理することができます。
@@ -160,16 +145,7 @@ OSは、**ハードウェアとソフトウェアの仲介**をして両方を�
 ハードウェアとソフトウェアをつなぐ役割。
 
 
-![os-components.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/5503d078-d343-4bae-9de9-e02c193dbea4/os-components.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094032Z&X-Amz-Expires=3600&X-Amz-Signature=3119f7e267d94aa785d84346142286b76c61cad8515b080a9695b4491da89bd2&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![shell-core-layer.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/5eea439f-23c6-467a-95c0-df586d50cc5e/shell-core-layer.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094033Z&X-Amz-Expires=3600&X-Amz-Signature=42a9308d62516483a21fef2516719cebbd22502715d83c330971382646fff148&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/27717d4b-a234-4cde-9df3-0ef0fc0e2e34/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094033Z&X-Amz-Expires=3600&X-Amz-Signature=1ce3e1bbb8225f8a797214b16d7a2e579e08d0e2ec64c03a8ba03887c7caa1a2&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/03663ec6-b134-406d-9f63-4ce1b58c98fa/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=0bb2c92d231e322e3e46afaf68df95e7e8f15a00c91f5b237bf3d66fc9c72ec6&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/301a16e4-7ca8-44e6-b1a0-0ffb1889fa94/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=8a70e02b84974a64cce8a56a66afb74d5bf0bd764340d00406fe028f86153f81&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ## ファームウェア（BIOS)
@@ -182,15 +158,6 @@ BIOSは主にハードウェアの初期化とブートプロセスの管理に�
 
 
 BIOSがシステムの初期化とハードウェアの設定を完了した後、ブートローダーを経由してOSのカーネルに制御を移します。カーネルはその後、OSの残りの部分をロードし、システムの起動を完了します。
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/ec014218-bbc0-4b40-9bc9-b32266622472/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=2c9246fa77e7070a3be4313125586d08f97288ea32e58c538ed65a0acd12ee62&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/233d83a9-19f4-4d0c-a2bb-8ad0a44d38ac/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=111666c313eed0ab94ff1c08da75edf655704a3e9420f973d481130ac48ecfee&X-Amz-SignedHeaders=host&x-id=GetObject)
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/23043795-48fe-42ca-9c70-fc89757503e1/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=5042366c4546e4ed76442001962b9b15e006ebcc71c01160d36d8bba6c7f44f9&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 ## カーネル
@@ -232,7 +199,7 @@ BIOSがシステムの初期化とハードウェアの設定を完了した後�
 データを特定のサイズに小分け（128バイト）にして通信をする仕組みです。通信の根幹を支える技術で、より効率よく確実にデータを届けられる仕組みになっています。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/152a13a9-e97d-44a8-8ab3-4ccc6a0a61a0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=9dc84e4d39be34bba05813e64e6931a037e5b33d109a2c9f0765615e864b9e6b&X-Amz-SignedHeaders=host&x-id=GetObject)
+![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/921fed04-a696-4d41-aa9b-7c5994ed116a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=2ea5a31e2aef557c2eefba4faa7bcdede21c3bbaa6d21cd9e7e6335429371221&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 パケットは、ヘッダーとボディに分かれています。ヘッダーには、送信元と目的地のアドレス、順序番号、エラーチェック情報などが含まれています。ボディにはデータの本体が入っています。
@@ -242,9 +209,6 @@ BIOSがシステムの初期化とハードウェアの設定を完了した後�
 
 
 TCP/IPモデルはインターネットの基盤となるプロトコルスタックのモデルで、4層からなります。
-
-
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/de3d73a1-364e-4b11-b1a5-bf9da4fbd831/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240207%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240207T094016Z&X-Amz-Expires=3600&X-Amz-Signature=c2f39bc257202a8c699a773fa51ee7fc456b020dec6af2279c4e07df8d5afc31&X-Amz-SignedHeaders=host&x-id=GetObject)
 
 
 | 階層 | TCP/IP プロトコルスタック | プロトコル          |
@@ -272,7 +236,7 @@ TCP/IPは、IPアドレスを住所として扱ってネットワーク通信を
 - **TCP(Transmission Control Protocol)**: データを損失なく確実に目的地に届けられる通信方法です。確実にデータを届けた確認をするので、信頼性が高いのが特徴です。
 - **UDP (User Datagram Protocol)**: データをただ目的地に送り続けるような通信方法です。伝送速度と頻度が高いのが特徴です。
 
-### HTTP**（Hypertext Transfer Protocol）**
+### HTTP（Hypertext Transfer Protocol）
 
 
 よくインターネットでウェブサイトを閲覧するときに使われるプロトコルです。基本的に文字列
@@ -339,70 +303,216 @@ message(string) arguments(int,float,string,byte[])
 # ソフトウェア設計
 
 
+この項ではソフトウェア設計についてまとめます。
+
+
+## オブジェクト指向＆関数プログラミング
+
+
+プログラミングの大きなジャンルにこの２つのパラダイム（設計方法）があります。それぞれ突き詰めていくと、プログラミングの本質を探っていくような作業でかなり奥深い体験なのですが、ここでは大切な設計の基本理念とそのサンプルコードを紹介します。
+
+
+### オブジェクト指向プログラミング
+
+
+オブジェクト指向は現在最もよく使われているプログラミングのパラダイム（設計方法）です。オブジェクト指向には以下の３つの大きな特徴があります。
+
+- **カプセル化**：データとメソッドを一つのクラスにまとめ、外部から中身を隠して処理を実行させることができます。
+- **継承**：親クラスのデータやメソッドを別の子クラスが受け継ぐことができます。
+- **ポリモーフィズム**：異なるクラスの機能が同じインターフェースやメソッド名でアクセスできるようにすること。
+
+吠える犬の例でサンプルコードを書きます。
+
+
+```c
+class Animal{
+	string name;
+	int age;
+	Animal(string name, int age){
+		name = name;
+		age = age;
+	}
+	void speak(){
+		printf("%s（%d歳）は鳴く", name, age);
+	}
+}
+//Animalクラスの継承
+class Dog: public Animal{
+	Dog(string name, int age): Animal(name, age){}
+	void speak(){
+			printf("%s（%d歳）はワンワンと吠える！", name, age);
+  }
+}
+//クラスをインスタンス化
+Dog dog1 = Dog("太郎", 3)
+//Speakというメソッドでも、Dogクラスではわんわんと鳴く事ができる。これがポリモーフィズム。
+dog1.speak(); //太郎（３歳）はワンワンと吠える！
+```
+
+
+オブジェクト指向はプログラミングを学ぶ上でかなり最初の方に習う概念ですが、突き詰めていくとかなり複雑な概念になっていきます。かなり柔軟かつ堅牢な設計にできる一方、システムが肥大化するに連れて、必要な知識と複雑性が増してくるので、より高度な脳みそが必要になってくる点に注意です。
+
+
+### 関数型プログラミング
+
+
+関数型プログラミングは、数学の関数の定義や呼び出しに重点を置いたプログラムの設計をする方法です。以下の特徴があります。
+
+- **純粋関数**：同じ引数に対して常に同じ結果を返し、副作用（グローバル変数の変更、入出力操作など）がありません。
+- **不変性（イミュータビリティ）**：データは変更不可能です。変更が必要な場合は、新しいデータを作成して返すことが一般的です。
+- **関数の第一級オブジェクト**：関数を他のデータと同様に扱い、変数に代入したり、他の関数の引数として渡したりできます。
+
+先程の吠える犬の例でサンプルコードを書きました。
+
+
+```c
+// Dog 構造体の定義
+typedef struct Animal{
+    string name;
+    int age;
+};
+
+// Dog構造体のインスタンスを作成する純粋な関数
+Animal* createDog(string name, int age) {
+		struct Animal *newDog;
+    newDog->name = name
+    newDog->age = age;
+    return newDog;
+}
+//引数として渡せる関数の型（ラムダ式）
+function speak = [](string name){
+	printf("%sはワンワンと吠える！\n", name);
+}
+// 犬の情報をPrintする関数
+void bowow(Animal* dog, function _speak) {
+	_speak("%s（%d歳）", dog->name, dog->age);
+}
+//構造体のインスタンス化
+Animal* dog1 = createDog("太郎", 5);
+//引数に構造体と関数を渡せる
+bowow(dog1, speak); //太郎（5歳）はワンワンと吠える！
+```
+
+
+関数型プログラミングは、堅牢で柔軟な設計をするのには向いていません。しかし、手続き的なプログラムを書いたり、それを並列処理したりするのに適しています。また、関数型プログラミングの原則や概念は、他のプログラミングスタイルにも影響を与え、より安全で効率的なコードの作成に役立ちます。オブジェクト指向といいとこ取りをしながら混ぜて使ってもいいでしょう。
+
+
 ## ソフトウェアアーキテクチャ
 
 
-MVCモデル・イベント駆動・レイヤード・マイクロサービス・リアクティブ
+ソフトウェアアーキテクチャとは、大きめなシステムの基本構造の軸となる設計方法論です。システムを作る上で大切になってくる要素（機能性、パフォーマンス、安定性、再利用可能性、理解しやすさ、拡張性など）を最大化できるように考えられたものです。プログラミングというより、サーバーシステムや工場でのものづくりなどにも発展できそうな規模感での設計方法になります。
 
 
-プログラミング
+ここでは、代表的なものをいくつか紹介します。
 
-
-## オブジェクト指向・関数型プログラミングについて
-
+- **イベント駆動アーキテクチャ**：イベントの発火に基づいてアプリケーションの動作を制御する設計パターン。
+- **レイヤードアーキテクチャ**：ソフトウェアを複数のレイヤに分割する設計パターンです。各レイヤは特定の役割を持ち、上位レイヤから下位レイヤへの依存関係があります。
+- **マイクロサービスアーキテクチャ**：大規模なアプリケーションを小さな独立したサービスに分割する設計パターンです。
+- **リアクティブアーキテクチャ**：リアクティブ（即応答）とは、データが変化するたびにすぐにメッセージを送って、変更を反映させるというリアルタイムな仕組みのことを指します。
 
 ## デザインパターン
 
 
-GoFパターンってなに？
+デザインパターンは、プログラミングでソフトウェアを作るに当たっての便利な設計方法パターンです。
 
 
-[bookmark](https://qiita.com/KyoheiOkawa/items/17bbd352671c8e5f1944)
+### MVCモデル
 
 
-## ウォーターフォール・アジャイル・テスト駆動
+MVC（Model-View-Controller）モデルは、GUIアプリを作る上でとてもポピュラーな設計パターンになります。このアーキテクチャでは、アプリケーションを3つの主要なコンポーネントに分割します。
 
 
-[bookmark](https://zenn.dev/nanagi/articles/0e899711611630)
+```mermaid
+---
+title: MVC Architecture
+---
+graph LR
+  U[User：入力] --> C(Controller:指示役)
+  C --> M(Model：データ管理)
+  M --> D[Database]
+  D --> M
+  M --> C
+  C --> V(View：見た目)
+    
+```
 
+- **モデル（Model）** データの管理や処理を担当するModel
+- **ビュー（View）**: ユーザーインターフェースを担当します。モデルからデータを受け取り、それをユーザーに表示します。ユーザーの入力や操作をコントローラに伝えます。
+- **コントローラ（Controller）**: ユーザーの入力や操作を受け取り、それに基づいてモデルを更新したり、ビューを更新したりします。
+
+MVCモデルの、アプリケーションの各コンポーネントを独立させて、データの流れを管理しやすくしたり、開発しやすくしたりできます。
+
+
+派生形として、**MVVM**や**MVP**などがあります
+
+
+## Flux  (Store - View - Action - Dispatcher)
+
+
+Fluxとは常に一方向にデータが流れ続けるような
+
+- **一方向データフロー**: データは常にViewからStoreへ一方向に流れます。
+- **イベント駆動**：操作はすべてActionの発行で行う
+- **状態管理**: アプリケーションの状態はStoreに集中管理されます。
+- **変更検知**: Storeは状態の変化を検知し、Viewに通知します。
+
+```mermaid
+---
+title: Flux Architecture
+---
+graph LR
+  A(Action) --> D(Dispatcher)
+	D --> S(Store)
+	S --> V(View)
+	V --> A2(NewAction)
+	A2 --> D
+```
+
+
+## その他デザインパターン
+
+
+個人的によく使うデザインパターンに絞って紹介します
+
+- **Dependency Injection（依存注入）**：パラメーターに依存しない設計をして、まとめて上流から依存するデータを流し込むイメージ。
+- **Singleton**：シングルトンはクラスの種類で、必ず1つしか存在しないようなインスタンスしかつくれないようすること。
+- **StateMachine**：状態遷移をグラフ的な点と線の定義をして、状態を管理する方法。複雑な状態遷移をぱっと見でわかりやすく設計できるのが良い。派生にFSMやBehaviorTreeなど。
+- **Observer**：データが変更されると、自動的にデータを送るようにするパターンです。いちいちデータを送るような手続きをしなくていいので楽です。
 
 # UI・UXについて
 
 
-## **ユーザーインターフェース（UI）デザイン**:
-
-- UIは、ユーザーがソフトウェアやデバイスと対話するためのインターフェースの設計を指します。
-- これには画面レイアウト、色彩、フォント、ボタン、アイコンなど視覚的要素の配置とデザインが含まれます。
-- UIデザインの目標は、使いやすく、直感的で、視覚的に魅力的なインターフェースを作ることです。
-- コンピューターサイエンスの文脈では、UIデザインはプログラミングと密接に関連し、フロントエンド開発（HTML、CSS、JavaScriptなど）の知識が重要です。
-
-## **ユーザーエクスペリエンス（UX）デザイン**:
-
-- UXデザインは、製品やサービスを使用する際のユーザーの経験全体に関するものです。
-- この分野では、ユーザーリサーチ、ユーザーニーズの理解、ユーザージャーニーマップの作成、プロトタイピング、ユーザビリティテストなどが含まれます。
-- UXデザイナーは、使い勝手、アクセシビリティ、効率性を最適化することを目指します。
-- コンピューターサイエンスでは、UXデザインはシステム設計やソフトウェア開発プロセスに組み込まれ、ユーザーセントリックなアプローチを取ります。
-
-## **人間とコンピュータの相互作用（Human Computer Interaction）**:
-
-- HCIは、人間とコンピュータシステムの相互作用を研究する分野です。
-- この分野は、ユーザーの行動、認知心理学、インタフェースの設計原則に焦点を当てています。
-- HCIの研究は、より使いやすく効果的なUI/UXデザインに直接的な影響を与えます。
-
-# 人工知能
+## UIデザイン
 
 
-## ニューラルネットワーク
+UIとは、ユーザーがソフトウェアやデバイスと対話するためのインターフェースの設計を指します。大きな枠組みでは、レイアウトやページ遷移などの情報構造の設計から始まり、細かくはボタンやテキストの色やサイズなどの、視覚的な表現の設計をします。
 
 
-## 畳み込み
+ここでは、個人的にUIの設計をするに当たって大切なことを挙げてみます。
+
+- **アフォーダンス**：経験があるUIは特別な誘導なく自然に使用することができる。
+- **情報のコントラスト**：視線設計や、色やサイズなどで、情報の優先順位などを明確にする。
+- **ブランドの差別化**：UIは人と相互作用が起きる部分なので、ブランドの世界観をより身近な体験として与えることができます。
+- **アクセシビリティ**：色覚異常への対応や操作音、デバイスの差異の吸収など様々な想定に対応すること。
+
+テクニカルアーティストの文脈だと、ツールを作るに当たってUIの設計などは避けては通れないジャンルだと感じます。それぞれのソフトウェアの設計などに則った上で、ユーザーが使いにくいようなものは避けるようにしましょう。
 
 
-## 強化学習
+## UXデザイン
+
+
+UXデザインは、製品やサービスを使用する際のユーザーの体験全体を設計することです。
+
+
+この分野では、ユーザー調査、ユーザーニーズの理解、ユーザージャーニーマップの作成、プロトタイピング、ユーザビリティテストなどが含まれます。
+
+
+このプロセスは、ユーザーにアンケートをとったり、実際に体験する様子を観察したり、人間の行動や心理に即して、サービスの設計をします。
 
 
 # TBW
 
+- 人工知能
 - セキュリティ
 - データベース
 

@@ -11,12 +11,34 @@ const notion = new Client({
 })
 
 // passing notion client to the option
-const n2m = new NotionToMarkdown({ 
+const n2m = new NotionToMarkdown({
     notionClient: notion,
     config:{
         parseChildPages:false, // default: parseChildPages
     }
 });
+
+n2m.setCustomTransformer("bookmark", async (block) => {
+    const { parent } = block;
+    if (!parent) return "";
+    //typeの型チェック
+    console.log("bookmark", parent);
+    if (typeof parent != "string") return "";
+    const url = parent.match(/\(([^)]+)\)/)[1];
+    return `${url}\n`;
+});
+
+// 画像をダウンロードして連番で保存する
+// 画像のサイズを取得して、サイズを変更する
+// n2m.setCustomTransformer("image", async (block) => {
+//     const { parent } = block;
+//     if (!parent) return "";
+//     // extract url
+//     const url = parent.match(/\(([^)]+)\)/)[1];
+//     
+//     return parent;
+// });
+
 
 const BASE_PATH = "books/technical-artist-roadmap/"
 
@@ -43,15 +65,8 @@ published: true
     })
     console.log(response)
 
-    // // fetch page content
-    // const block = await notion.blocks.children.list({
-    //     block_id: pageId
-    // })
-
-    // console.log(block)
-
     const mdblocks = await n2m.pageToMarkdown(pageId);
-    // console.log(mdblocks);
+    console.log(mdblocks);
     const mdString = n2m.toMarkdownString(mdblocks);
  
     //overwrite to file
@@ -61,12 +76,6 @@ published: true
         fs.mkdirSync(BASE_PATH, { recursive: true });
     }
     console.log("write to file: " + filePath);
-    // typecheck of mdString
-    // if (typeof mdString !== "string") {
-    //     console.error("mdString is not a string type is:", (typeof mdString));
-    //     return;
-    // }
-
     const md = FormatZennPage({
         title: response.properties.title.title[0].plain_text,
         emoji: response.icon.emoji,

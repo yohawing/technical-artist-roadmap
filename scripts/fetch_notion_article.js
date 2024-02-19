@@ -1,13 +1,15 @@
 const { Client, LogLevel } = require("@notionhq/client")
 const { NotionToMarkdown } = require("notion-to-md");
 const fs = require('fs');
+const https = require('https');
+const path = require('path');
 
 let NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
 
 // Initializing a client
 const notion = new Client({
   auth: NOTION_TOKEN,
-  logLevel: LogLevel.DEBUG,
+  logLevel: LogLevel.ERROR,
 })
 
 // passing notion client to the option
@@ -17,6 +19,22 @@ const n2m = new NotionToMarkdown({
         parseChildPages:false, // default: parseChildPages
     }
 });
+
+function downloadImage(url, filename) {
+    const file = fs.createWriteStream(filename);
+
+    https.get(url, response => {
+        response.pipe(file);
+
+        file.on('finish', () => {
+            file.close();
+            console.log(`Image downloaded as ${filename}`);
+        });
+    }).on('error', err => {
+        fs.unlink(filename);
+        console.error(`Error downloading image: ${err.message}`);
+    });
+}
 
 n2m.setCustomTransformer("bookmark", async (block) => {
     const { parent } = block;
@@ -28,16 +46,32 @@ n2m.setCustomTransformer("bookmark", async (block) => {
     return `${url}\n`;
 });
 
+
+let counter = 1;
+
 // 画像をダウンロードして連番で保存する
 // 画像のサイズを取得して、サイズを変更する
-// n2m.setCustomTransformer("image", async (block) => {
-//     const { parent } = block;
-//     if (!parent) return "";
-//     // extract url
-//     const url = parent.match(/\(([^)]+)\)/)[1];
-//     
-//     return parent;
-// });
+n2m.setCustomTransformer("image", async (block) => {
+    const { parent } = block;
+    if (!parent) return "";
+
+    console.log(block);
+
+    let caption = "";
+    block.image.caption.forEach((element) => {
+        caption += element.plain_text + " ";
+    });
+
+    const url = block.image.file.url;
+    //urlからpngかjpgかgifかを取得する
+    const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
+    const filename = `images/books/tar/cs_${counter}.${ext}`;
+    downloadImage(url, path.join(process.cwd(), filename));
+
+    counter++;
+
+    return `![${caption}](/${filename})\n`;
+});
 
 
 const BASE_PATH = "books/technical-artist-roadmap/"
@@ -53,25 +87,22 @@ published: true
     return ZennFormat;
 }
 
-;(async () => {
+const fetch_and_convert_notion = async (data) => {
 
-    // fetch a notion page
-    //https://www.notion.so/yohawing/Technical-Artist-Roadmap-f6bcfff7533640adbbc2bac09300fe30?pvs=4
-    //https://www.notion.so/yohawing/33c1985b367242f783cfe0ff20b079dc?pvs=4
-    let pageId = "f6bcfff7533640adbbc2bac09300fe30"
-    pageId = "33c1985b367242f783cfe0ff20b079dc"
+    counter = 1;
+
     const response = await notion.pages.retrieve({
-        page_id: pageId
+        page_id: data.pageId
     })
-    console.log(response)
+    // console.log(response)
 
-    const mdblocks = await n2m.pageToMarkdown(pageId);
-    console.log(mdblocks);
+    const mdblocks = await n2m.pageToMarkdown(data.pageId);
+    // console.log(mdblocks);
     const mdString = n2m.toMarkdownString(mdblocks);
  
     //overwrite to file
     // joint path
-    const filePath = BASE_PATH + "05_computer_science.md";
+    const filePath = BASE_PATH + data.file;
     if (!fs.existsSync(BASE_PATH)) {
         fs.mkdirSync(BASE_PATH, { recursive: true });
     }
@@ -84,5 +115,21 @@ published: true
 
     fs.writeFileSync(filePath, md, { encoding: "utf-8" });
 
+  }
 
-  })()
+  ;(async()=>{
+
+    const data = [
+        {
+            slug: "computer_scicence",
+            pageId: "33c1985b367242f783cfe0ff20b079dc",
+            file: "05_computer_science.md"
+        }
+    ];
+
+    data.forEach((obj) => {
+        fetch_and_convert_notion(obj);
+    });
+
+
+  })();

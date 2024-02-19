@@ -19,7 +19,8 @@ published: true
 データ構造は、データを処理しやすい形に整えた構造のことです。アルゴリズムが料理しやすいようにデータを下処理するようなイメージですね
 
 
-![Untitled.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/80daa2c2-c982-4451-a9de-9ef8b9313541/Untitled.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=cc9d5379d6a565021c1bcf03634950eb5c10629120d47a1b0285fe6924a19c1e&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_1.gif)
+
 
 - **配列（Array）**：一列に連なったデータのまとまりです。連続したメモリに格納されます。
 - **連想配列（Key-Value）**：関連性のある要素どうしを結びつけるデータ構造です。その際、標識となる要素のことを、**キー(key)**、対応する要素のことを**値(value)**と言います。DictionaryだったりHashTableだったり別名があります。
@@ -52,7 +53,8 @@ published: true
 電流を流す、流さない（０と１）を制御できるので、**論理回路**（AND、OR、NOT、XOR）を組むことができます。この論理回路を使うと、四則演算（+−×÷）を行うことができます。
 
 
-![dream2.gif](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/5462d65e-aafe-4458-8e42-c5c36568e6ca/dream2.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=6a2badf9571694ff0a196f0b81ca876c5051b94656000fd7c0c005e7cdddd9c1&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_2.gif)
+
 
 
 ## CPU（Central Processing Unity）
@@ -61,7 +63,8 @@ published: true
 CPUは半導体の集合体です。主な機能は、シンプルには数値や論理的計算をすることなのですが、その計算により、プログラムの命令を実行し、コンピュータの各部分を制御することができます。。これにより、コンピュータは計算、データの処理、タスクの実行など、多様な作業をこなすことができます。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/4eaebf06-2836-4821-a106-921ab0f17e0b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=2f41b9842f808c71f0cdbea50d9cb2a33d52c7afd0ae523b15cc7506d3988664&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_3.png)
+
 
 
 CPUは一般に以下の主要なコンポーネントから構成されています
@@ -88,7 +91,8 @@ x86,x64,ARMなどがある。                                         |
 CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）、実行（Execute）」の3ステップのサイクルで成り立っています。これを理解することで、CPUがどのようにして命令を処理するかが分かります。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/97a29cdb-ecd9-4cf0-a943-2f6c52ad28c0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=9f45025a8d1650828d708d1e70920f4b76cf14641c06a855588d73ad52fd3737&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_4.png)
+
 
 1. **フェッチ（Fetch）**:
 	- このステップでは、CPUはメモリから次に実行すべき命令を取得します。命令は通常、バイナリコード（0と1のシーケンス）の形で格納されています。
@@ -106,7 +110,8 @@ CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）
 GPUは、主に画像処理とレンダリングに特化したコンピュータのプロセッサです。もともとはビデオゲームや3Dグラフィックスを高速に処理するために設計されましたが、その高い計算能力と並列処理能力により、現在ではビデオ編集、画像処理、機械学習、ディープラーニングなど幅広い分野で使用されています。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/cc431c5c-7b1d-4f60-bd46-12bbb2e88816/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=ff7ce747f0e4124d176d3b542366bb366558a38ccd0a62cb176be7dce7fe06bf&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_5.png)
+
 
 
 GPUは数百から数千の小さなコアを持っており、これにより複数の計算処理を同時に行うことができます。この並列処理能力は、特に大量のデータを扱う作業や、同じ処理を多数のデータポイントに適用するような作業に適しています。
@@ -127,7 +132,8 @@ GPGPU（General-Purpose computing on Graphics Processing Units）はGPUの計算
 このメモリはデータやプログラムコードの一時的な保存場所として使用され、CPUが直接アクセスしてデータの読み書きを行います
 
 
-![メモリはよく机の上に例えられる。](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/8d613a44-ce56-4c43-9ae3-4263195ee545/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=770c4432636933d8ca0bfcdf8433367bfe322679fec796da2e2af3fad511aae8&X-Amz-SignedHeaders=host&x-id=GetObject)
+![メモリはよく机の上に例えられる。 ](/images/books/tar/cs_6.png)
+
 
 
 RAMの速度はコンピュータの全体的なパフォーマンスに大きな影響を与え、メモリ容量が多いほど、より多くのプログラムやデータを同時に処理することができます。
@@ -145,7 +151,8 @@ OSは、**ハードウェアとソフトウェアの仲介**をして両方を�
 ハードウェアとソフトウェアをつなぐ役割。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/301a16e4-7ca8-44e6-b1a0-0ffb1889fa94/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=8a70e02b84974a64cce8a56a66afb74d5bf0bd764340d00406fe028f86153f81&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_7.png)
+
 
 
 ## ファームウェア（BIOS)
@@ -199,7 +206,8 @@ BIOSがシステムの初期化とハードウェアの設定を完了した後�
 データを特定のサイズに小分け（128バイト）にして通信をする仕組みです。通信の根幹を支える技術で、より効率よく確実にデータを届けられる仕組みになっています。
 
 
-![Untitled.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/b7c80d04-e22f-417f-8da1-4b443ffb4876/921fed04-a696-4d41-aa9b-7c5994ed116a/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240218%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240218T122807Z&X-Amz-Expires=3600&X-Amz-Signature=2ea5a31e2aef557c2eefba4faa7bcdede21c3bbaa6d21cd9e7e6335429371221&X-Amz-SignedHeaders=host&x-id=GetObject)
+![](/images/books/tar/cs_8.png)
+
 
 
 パケットは、ヘッダーとボディに分かれています。ヘッダーには、送信元と目的地のアドレス、順序番号、エラーチェック情報などが含まれています。ボディにはデータの本体が入っています。

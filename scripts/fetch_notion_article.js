@@ -59,7 +59,7 @@ n2m.setCustomTransformer("image", async (block) => {
 
     let caption = "";
     block.image.caption.forEach((element) => {
-        caption += element.plain_text + " ";
+        caption += element.plain_text + "";
     });
 
     const url = block.image.file.url;
@@ -69,8 +69,10 @@ n2m.setCustomTransformer("image", async (block) => {
     downloadImage(url, path.join(process.cwd(), filename));
 
     counter++;
-
-    return `![${caption}](/${filename})\n`;
+    if (caption === "") {
+        return `![image.${ext}](/${filename})\n`;
+    }
+    return `![image.${ext}](/${filename})\n*${caption}*\n`;
 });
 
 

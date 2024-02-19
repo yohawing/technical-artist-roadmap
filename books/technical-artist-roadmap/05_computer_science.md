@@ -19,7 +19,7 @@ published: true
 データ構造は、データを処理しやすい形に整えた構造のことです。アルゴリズムが料理しやすいようにデータを下処理するようなイメージですね
 
 
-![](/images/books/tar/cs_1.gif)
+![image.gif](/images/books/tar/cs_1.gif)
 
 
 - **配列（Array）**：一列に連なったデータのまとまりです。連続したメモリに格納されます。
@@ -53,7 +53,7 @@ published: true
 電流を流す、流さない（０と１）を制御できるので、**論理回路**（AND、OR、NOT、XOR）を組むことができます。この論理回路を使うと、四則演算（+−×÷）を行うことができます。
 
 
-![](/images/books/tar/cs_2.gif)
+![image.gif](/images/books/tar/cs_2.gif)
 
 
 
@@ -63,7 +63,7 @@ published: true
 CPUは半導体の集合体です。主な機能は、シンプルには数値や論理的計算をすることなのですが、その計算により、プログラムの命令を実行し、コンピュータの各部分を制御することができます。。これにより、コンピュータは計算、データの処理、タスクの実行など、多様な作業をこなすことができます。
 
 
-![](/images/books/tar/cs_3.png)
+![image.png](/images/books/tar/cs_3.png)
 
 
 
@@ -91,7 +91,7 @@ x86,x64,ARMなどがある。                                         |
 CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）、実行（Execute）」の3ステップのサイクルで成り立っています。これを理解することで、CPUがどのようにして命令を処理するかが分かります。
 
 
-![](/images/books/tar/cs_4.png)
+![image.png](/images/books/tar/cs_4.png)
 
 
 1. **フェッチ（Fetch）**:
@@ -110,7 +110,7 @@ CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）
 GPUは、主に画像処理とレンダリングに特化したコンピュータのプロセッサです。もともとはビデオゲームや3Dグラフィックスを高速に処理するために設計されましたが、その高い計算能力と並列処理能力により、現在ではビデオ編集、画像処理、機械学習、ディープラーニングなど幅広い分野で使用されています。
 
 
-![](/images/books/tar/cs_5.png)
+![image.png](/images/books/tar/cs_5.png)
 
 
 
@@ -132,7 +132,8 @@ GPGPU（General-Purpose computing on Graphics Processing Units）はGPUの計算
 このメモリはデータやプログラムコードの一時的な保存場所として使用され、CPUが直接アクセスしてデータの読み書きを行います
 
 
-![メモリはよく机の上に例えられる。 ](/images/books/tar/cs_6.png)
+![image.png](/images/books/tar/cs_6.png)
+*メモリはよく机の上に例えられる。*
 
 
 
@@ -151,7 +152,7 @@ OSは、**ハードウェアとソフトウェアの仲介**をして両方を�
 ハードウェアとソフトウェアをつなぐ役割。
 
 
-![](/images/books/tar/cs_7.png)
+![image.png](/images/books/tar/cs_7.png)
 
 
 
@@ -206,7 +207,7 @@ BIOSがシステムの初期化とハードウェアの設定を完了した後�
 データを特定のサイズに小分け（128バイト）にして通信をする仕組みです。通信の根幹を支える技術で、より効率よく確実にデータを届けられる仕組みになっています。
 
 
-![](/images/books/tar/cs_8.png)
+![image.png](/images/books/tar/cs_8.png)
 
 
 

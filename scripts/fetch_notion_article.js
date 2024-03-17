@@ -3,8 +3,11 @@ const { NotionToMarkdown } = require("notion-to-md");
 const fs = require('fs');
 const https = require('https');
 const path = require('path');
+const axios = require('axios');
+const sharp = require('sharp');
 
 let NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
+let SLUG = "tar"
 
 // Initializing a client
 const notion = new Client({
@@ -20,27 +23,42 @@ const n2m = new NotionToMarkdown({
     }
 });
 
-function downloadImage(url, filename) {
+async　function downloadImage(url, filename) {
     const file = fs.createWriteStream(filename);
 
-    https.get(url, response => {
-        response.pipe(file);
-
-        file.on('finish', () => {
-            file.close();
-            console.log(`Image downloaded as ${filename}`);
-        });
-    }).on('error', err => {
-        fs.unlink(filename);
-        console.error(`Error downloading image: ${err.message}`);
+    const response = await axios({
+        url,
+        method: 'GET',
+        responseType: 'arraybuffer'
     });
+
+    // ダウンロードしたデータをsharpに渡してリサイズ
+    const resizedImage = await sharp(response.data)
+        .resize(1000)
+        .toBuffer();
+
+    // リサイズした画像をファイルに書き込む
+    fs.writeFileSync(filename, resizedImage);
+    console.log(`Image downloaded as ${filename}`);
+
+    // https.get(url, response => {
+    //     response.pipe(file);
+
+    //     file.on('finish', () => {
+    //         file.close();
+    //         console.log(`Image downloaded as ${filename}`);
+    //     });
+    // }).on('error', err => {
+    //     fs.unlink(filename);
+    //     console.error(`Error downloading image: ${err.message}`);
+    // });
 }
 
 n2m.setCustomTransformer("bookmark", async (block) => {
     const { parent } = block;
     if (!parent) return "";
     //typeの型チェック
-    console.log("bookmark", parent);
+    // console.log("bookmark", parent);
     if (typeof parent != "string") return "";
     const url = parent.match(/\(([^)]+)\)/)[1];
     return `${url}\n`;
@@ -55,7 +73,7 @@ n2m.setCustomTransformer("image", async (block) => {
     const { parent } = block;
     if (!parent) return "";
 
-    console.log(block);
+    // console.log(block);
 
     let caption = "";
     block.image.caption.forEach((element) => {
@@ -65,7 +83,7 @@ n2m.setCustomTransformer("image", async (block) => {
     const url = block.image.file.url;
     //urlからpngかjpgかgifかを取得する
     const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
-    const filename = `images/books/tar/cs_${counter}.${ext}`;
+    const filename = `images/books/tar/${SLUG}_${counter}.${ext}`;
     downloadImage(url, path.join(process.cwd(), filename));
 
     counter++;
@@ -73,6 +91,12 @@ n2m.setCustomTransformer("image", async (block) => {
         return `![image.${ext}](/${filename})\n`;
     }
     return `![image.${ext}](/${filename})\n*${caption}*\n`;
+});
+
+
+n2m.setCustomTransformer("divider", async (block) => {
+    console.log("divider", block);
+    return "---\n";
 });
 
 
@@ -120,16 +144,21 @@ const fetch_and_convert_notion = async (data) => {
   }
 
   ;(async()=>{
-
     const data = [
+        // {
+        //     slug: "computer_scicence",
+        //     pageId: "33c1985b367242f783cfe0ff20b079dc",
+        //     file: "05_computer_science.md"
+        // },
         {
-            slug: "computer_scicence",
-            pageId: "33c1985b367242f783cfe0ff20b079dc",
-            file: "05_computer_science.md"
+            slug: "computer_graphics",
+            pageId: "a8ff5118073d4a47927979597385558f",
+            file: "06_computer_graphics.md"
         }
     ];
 
     data.forEach((obj) => {
+        SLUG = obj.slug;
         fetch_and_convert_notion(obj);
     });
 

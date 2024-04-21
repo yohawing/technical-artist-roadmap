@@ -6,8 +6,9 @@ const path = require('path');
 const axios = require('axios');
 const sharp = require('sharp');
 
-let NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
+const NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
 let SLUG = "tar"
+let counter = 1;
 
 // Initializing a client
 const notion = new Client({
@@ -23,6 +24,37 @@ const n2m = new NotionToMarkdown({
     }
 });
 
+
+// 画像をダウンロードして連番で保存する
+// 画像のサイズを取得して、サイズを変更する
+n2m.setCustomTransformer("image", async (block) => {
+    const { parent } = block;
+    if (!parent) return "";
+
+    console.log("image", SLUG, counter);
+
+    // console.log(block);
+
+    let caption = "";
+    block.image.caption.forEach((element) => {
+        caption += element.plain_text + "";
+    });
+
+    const url = block.image.file.url;
+    //urlからpngかjpgかgifかを取得する
+    const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
+    const filename = `images/books/tar/${SLUG}_${counter}.${ext}`;
+    const width = await downloadImage(url, path.join(process.cwd(), filename));
+
+    counter++;
+
+    if( width >= 1000){
+        return `![image.${ext}](/${filename})\n${caption}\n`;
+    }else{
+        return `![image.${ext}](/${filename} =${width}x)\n${caption}\n`;
+    }
+});
+
 async　function downloadImage(url, filename) {
     const file = fs.createWriteStream(filename);
 
@@ -33,25 +65,24 @@ async　function downloadImage(url, filename) {
     });
 
     // ダウンロードしたデータをsharpに渡してリサイズ
-    const resizedImage = await sharp(response.data)
-        .resize(1000)
-        .toBuffer();
+    //画像のサイズを取得して、Width1000px以上の場合は1000pxにリサイズする
+    //それ以下は横幅を変数に保持
 
-    // リサイズした画像をファイルに書き込む
-    fs.writeFileSync(filename, resizedImage);
-    console.log(`Image downloaded as ${filename}`);
+    const image = sharp(response.data);
+    const metadata = await image.metadata();
+    if (metadata.width > 1000) {
+        const resizedImage = await image.resize(1000).toBuffer();
+        fs.writeFileSync(filename, resizedImage);
+        console.log(`Image downloaded as ${filename}`);
+    } else {
+        const resizedImage = await image.toBuffer();
+        fs.writeFileSync(filename, resizedImage);
+        console.log(`Image downloaded as ${filename}`);
+    }
+    console.log(metadata.width)
+    return metadata.width;
 
-    // https.get(url, response => {
-    //     response.pipe(file);
 
-    //     file.on('finish', () => {
-    //         file.close();
-    //         console.log(`Image downloaded as ${filename}`);
-    //     });
-    // }).on('error', err => {
-    //     fs.unlink(filename);
-    //     console.error(`Error downloading image: ${err.message}`);
-    // });
 }
 
 n2m.setCustomTransformer("bookmark", async (block) => {
@@ -65,38 +96,20 @@ n2m.setCustomTransformer("bookmark", async (block) => {
 });
 
 
-let counter = 1;
-
-// 画像をダウンロードして連番で保存する
-// 画像のサイズを取得して、サイズを変更する
-n2m.setCustomTransformer("image", async (block) => {
-    const { parent } = block;
-    if (!parent) return "";
-
-    // console.log(block);
-
-    let caption = "";
-    block.image.caption.forEach((element) => {
-        caption += element.plain_text + "";
-    });
-
-    const url = block.image.file.url;
-    //urlからpngかjpgかgifかを取得する
-    const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
-    const filename = `images/books/tar/${SLUG}_${counter}.${ext}`;
-    downloadImage(url, path.join(process.cwd(), filename));
-
-    counter++;
-    if (caption === "") {
-        return `![image.${ext}](/${filename})\n`;
-    }
-    return `![image.${ext}](/${filename})\n*${caption}*\n`;
-});
 
 
 n2m.setCustomTransformer("divider", async (block) => {
     console.log("divider", block);
     return "---\n";
+});
+
+n2m.setCustomTransformer("video", async (block) => {
+    console.log("video", block);
+    // youtubeリンクの場合URLを取得
+    if (block.video.type === "external") {
+        return block.video.external.url+"\n";
+    }
+    return `[video](${block.video.file.url})\n`;
 });
 
 
@@ -116,6 +129,8 @@ published: true
 const fetch_and_convert_notion = async (data) => {
 
     counter = 1;
+    SLUG = data.slug;
+    console.log(SLUG)
 
     const response = await notion.pages.retrieve({
         page_id: data.pageId
@@ -125,14 +140,13 @@ const fetch_and_convert_notion = async (data) => {
     const mdblocks = await n2m.pageToMarkdown(data.pageId);
     // console.log(mdblocks);
     const mdString = n2m.toMarkdownString(mdblocks);
- 
-    //overwrite to file
+
     // joint path
     const filePath = BASE_PATH + data.file;
     if (!fs.existsSync(BASE_PATH)) {
         fs.mkdirSync(BASE_PATH, { recursive: true });
     }
-    console.log("write to file: " + filePath);
+
     const md = FormatZennPage({
         title: response.properties.title.title[0].plain_text,
         emoji: response.icon.emoji,
@@ -140,27 +154,32 @@ const fetch_and_convert_notion = async (data) => {
     });
 
     fs.writeFileSync(filePath, md, { encoding: "utf-8" });
+    console.log("write to file: " + filePath);
 
   }
 
   ;(async()=>{
     const data = [
+        {
+            slug: "math",
+            pageId: "b06a904c37174d62806d5a571b1347ea",
+            file: "02_math.md"
+        },
         // {
         //     slug: "computer_scicence",
         //     pageId: "33c1985b367242f783cfe0ff20b079dc",
         //     file: "05_computer_science.md"
         // },
-        {
-            slug: "computer_graphics",
-            pageId: "a8ff5118073d4a47927979597385558f",
-            file: "06_computer_graphics.md"
-        }
+        // {
+        //     slug: "computer_graphics",
+        //     pageId: "a8ff5118073d4a47927979597385558f",
+        //     file: "06_computer_graphics.md"
+        // },
     ];
 
-    data.forEach((obj) => {
-        SLUG = obj.slug;
-        fetch_and_convert_notion(obj);
-    });
-
+    //逐次処理
+    for (const d of data) {
+        await fetch_and_convert_notion(d);
+    }
 
   })();

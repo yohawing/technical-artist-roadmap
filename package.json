@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "npx zenn preview",
-    "build": "node scripts/fetch_notion_article.js"
+    "build": "npm run build:cg && npm run build:cs",
+    "build:math": "node scripts/fetch_notion_article.js --slug math --id b06a904c37174d62806d5a571b1347ea --index 02",
+    "build:cs": "node scripts/fetch_notion_article.js --slug computer_science --id 33c1985b367242f783cfe0ff20b079dc --index 05",
+    "build:cg": "node scripts/fetch_notion_article.js --slug computer_graphics --id a8ff5118073d4a47927979597385558f --index 06"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",

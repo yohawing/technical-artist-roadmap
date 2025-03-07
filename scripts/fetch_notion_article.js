@@ -5,6 +5,7 @@ const https = require('https');
 const path = require('path');
 const axios = require('axios');
 const sharp = require('sharp');
+const { parseArgs } = require('node:util')
 
 const NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
 let SLUG = "tar"
@@ -24,14 +25,14 @@ const n2m = new NotionToMarkdown({
     }
 });
 
-
 // 画像をダウンロードして連番で保存する
 // 画像のサイズを取得して、サイズを変更する
+
 n2m.setCustomTransformer("image", async (block) => {
     const { parent } = block;
     if (!parent) return "";
 
-    console.log("image", SLUG, counter);
+    // console.log("image", SLUG, counter);
 
     // console.log(block);
 
@@ -79,21 +80,21 @@ async　function downloadImage(url, filename) {
         fs.writeFileSync(filename, resizedImage);
         console.log(`Image downloaded as ${filename}`);
     }
-    console.log(metadata.width)
+    // console.log(metadata.width)
     return metadata.width;
 
 
 }
 
-n2m.setCustomTransformer("bookmark", async (block) => {
-    const { parent } = block;
-    if (!parent) return "";
-    //typeの型チェック
-    // console.log("bookmark", parent);
-    if (typeof parent != "string") return "";
-    const url = parent.match(/\(([^)]+)\)/)[1];
-    return `${url}\n`;
-});
+// n2m.setCustomTransformer("bookmark", async (block) => {
+//     const { parent } = block;
+//     if (!parent) return "";
+//     //typeの型チェック
+//     // console.log("bookmark", parent);
+//     if (typeof parent != "string") return "";
+//     const url = parent.match(/\(([^)]+)\)/)[1];
+//     return `${url}\n`;
+// });
 
 
 
@@ -159,27 +160,47 @@ const fetch_and_convert_notion = async (data) => {
   }
 
   ;(async()=>{
-    const data = [
-        {
-            slug: "math",
-            pageId: "b06a904c37174d62806d5a571b1347ea",
-            file: "02_math.md"
-        },
-        // {
-        //     slug: "computer_scicence",
-        //     pageId: "33c1985b367242f783cfe0ff20b079dc",
-        //     file: "05_computer_science.md"
-        // },
-        // {
-        //     slug: "computer_graphics",
-        //     pageId: "a8ff5118073d4a47927979597385558f",
-        //     file: "06_computer_graphics.md"
-        // },
-    ];
-
-    //逐次処理
-    for (const d of data) {
-        await fetch_and_convert_notion(d);
+    // const data = [
+    //     // {
+    //     //     slug: "math",
+    //     //     pageId: "b06a904c37174d62806d5a571b1347ea",
+    //     //     file: "02_math.md"
+    //     // },
+    //     // {
+    //     //     slug: "computer_scicence",
+    //     //     pageId: "33c1985b367242f783cfe0ff20b079dc",
+    //     //     file: "05_computer_science.md"
+    //     // },
+    //     {
+    //         slug: "computer_graphics",
+    //         pageId: "a8ff5118073d4a47927979597385558f",
+    //         file: "06_computer_graphics.md"
+    //     },
+    //   ];
+      
+    // 引数 slug id index から生成
+    const { values, positions } = parseArgs({
+        args: process.args,
+        allowPositionals: true, // コマンド引数を取得できるようにする設定
+        options: {
+          slug: {
+            type: 'string'
+            },
+            id: {
+                type: 'string'
+            },
+            index: {
+                type: 'string'
+            }
+        }
+    })
+      
+    const data = {
+        slug: values.slug,
+        pageId: values.id,
+        file: `${values.index}_${values.slug}.md`
     }
+
+    await fetch_and_convert_notion(data);
 
   })();

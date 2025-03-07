@@ -8,7 +8,7 @@ const sharp = require('sharp');
 const { parseArgs } = require('node:util')
 
 const NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
-let SLUG = "tar"
+let SLUG = "yohawing"
 let counter = 1;
 
 // Initializing a client
@@ -44,7 +44,7 @@ n2m.setCustomTransformer("image", async (block) => {
     const url = block.image.file.url;
     //urlからpngかjpgかgifかを取得する
     const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
-    const filename = `images/books/tar/${SLUG}_${counter}.${ext}`;
+    const filename = `images/articles/${SLUG}_${counter}.${ext}`;
     const width = await downloadImage(url, path.join(process.cwd(), filename));
 
     counter++;
@@ -86,15 +86,15 @@ async　function downloadImage(url, filename) {
 
 }
 
-// n2m.setCustomTransformer("bookmark", async (block) => {
-//     const { parent } = block;
-//     if (!parent) return "";
-//     //typeの型チェック
-//     // console.log("bookmark", parent);
-//     if (typeof parent != "string") return "";
-//     const url = parent.match(/\(([^)]+)\)/)[1];
-//     return `${url}\n`;
-// });
+n2m.setCustomTransformer("bookmark", async (block) => {
+    const { parent } = block;
+    if (!parent) return "";
+    //typeの型チェック
+    // console.log("bookmark", parent);
+    if (typeof parent != "string") return "";
+    const url = parent.match(/\(([^)]+)\)/)[1];
+    return `${url}\n`;
+});
 
 
 
@@ -114,12 +114,14 @@ n2m.setCustomTransformer("video", async (block) => {
 });
 
 
-const BASE_PATH = "books/technical-artist-roadmap/"
+const BASE_PATH = "articles/"
 
 const FormatZennPage = (obj) => {
     const ZennFormat = `---
 title: "${obj.title}"
-emoji: "${obj.emoji}"
+type: "tech"
+topics: [${obj.topics || ''}]
+emoji: "${obj.emoji || ''}"
 published: true
 ---
     ${obj.markdown}
@@ -130,26 +132,27 @@ published: true
 const fetch_and_convert_notion = async (data) => {
 
     counter = 1;
-    SLUG = data.slug;
-    console.log(SLUG)
+    SLUG = data.pageId
+    console.log("fetching ", data.pageId)
 
     const response = await notion.pages.retrieve({
         page_id: data.pageId
     })
-    // console.log(response)
+    console.log(response.properties.title.title[0].plain_text)
 
     const mdblocks = await n2m.pageToMarkdown(data.pageId);
     // console.log(mdblocks);
     const mdString = n2m.toMarkdownString(mdblocks);
 
     // joint path
-    const filePath = BASE_PATH + data.file;
+    const filePath = BASE_PATH + data.pageId + ".md";
     if (!fs.existsSync(BASE_PATH)) {
         fs.mkdirSync(BASE_PATH, { recursive: true });
     }
 
     const md = FormatZennPage({
         title: response.properties.title.title[0].plain_text,
+        topics: '"'+data.topics.replace(",",'","') + '"',
         emoji: response.icon.emoji,
         markdown: mdString.parent
     });
@@ -160,47 +163,32 @@ const fetch_and_convert_notion = async (data) => {
   }
 
   ;(async()=>{
-    // const data = [
-    //     // {
-    //     //     slug: "math",
-    //     //     pageId: "b06a904c37174d62806d5a571b1347ea",
-    //     //     file: "02_math.md"
-    //     // },
-    //     // {
-    //     //     slug: "computer_scicence",
-    //     //     pageId: "33c1985b367242f783cfe0ff20b079dc",
-    //     //     file: "05_computer_science.md"
-    //     // },
-    //     {
-    //         slug: "computer_graphics",
-    //         pageId: "a8ff5118073d4a47927979597385558f",
-    //         file: "06_computer_graphics.md"
-    //     },
-    //   ];
-      
+
     // 引数 slug id index から生成
     const { values, positions } = parseArgs({
         args: process.args,
         allowPositionals: true, // コマンド引数を取得できるようにする設定
         options: {
-          slug: {
-            type: 'string'
-            },
             id: {
                 type: 'string'
             },
-            index: {
+            topics: {
                 type: 'string'
             }
         }
-    })
+    });
       
-    const data = {
-        slug: values.slug,
-        pageId: values.id,
-        file: `${values.index}_${values.slug}.md`
+    console.log(values);
+
+    if (!values.id) {
+        console.log("id is required");
+        process.exit(1);
     }
 
+    var data = {
+        pageId: values.id,
+        topics: values.topics,
+    }
     await fetch_and_convert_notion(data);
 
   })();

@@ -6,9 +6,12 @@
   "scripts": {
     "start": "npx zenn preview",
     "build": "npm run build:cg && npm run build:cs",
-    "build:math": "node scripts/fetch_notion_article.js --slug math --id b06a904c37174d62806d5a571b1347ea --index 02",
-    "build:cs": "node scripts/fetch_notion_article.js --slug computer_science --id 33c1985b367242f783cfe0ff20b079dc --index 05",
-    "build:cg": "node scripts/fetch_notion_article.js --slug computer_graphics --id a8ff5118073d4a47927979597385558f --index 06"
+    "build:math": "node scripts/load_tar.js --slug math --id b06a904c37174d62806d5a571b1347ea --index 02",
+    "build:cs": "node scripts/load_tar.js --slug computer_science --id 33c1985b367242f783cfe0ff20b079dc --index 05",
+    "build:cg": "node scripts/load_tar.js --slug computer_graphics --id a8ff5118073d4a47927979597385558f --index 06",
+    "build:article1": "node scripts/load_article.js --id 15048e5455a08021ac4bf8b33de8fbe1 --topics vvvv,Chataigne",
+    "build:article2": "node scripts/load_article.js --id 15e48e5455a080979c8bf75fa3daedfc --topics vvvv"
+    
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",

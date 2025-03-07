@@ -1,5 +1,5 @@
 ---
-title: "基礎知識：コンピューターサイエンス（執筆中：85％）"
+title: "基礎知識：コンピューターサイエンス"
 emoji: "📟"
 published: true
 ---
@@ -19,7 +19,7 @@ published: true
 データ構造は、データを処理しやすい形に整えた構造のことです。アルゴリズムが料理しやすいようにデータを下処理するようなイメージですね
 
 
-![image.gif](/images/books/tar/computer_scicence_1.gif)
+![image.gif](/images/books/tar/computer_science_1.gif)
 
 
 
@@ -54,9 +54,15 @@ published: true
 電流を流す、流さない（０と１）を制御できるので、**論理回路**（AND、OR、NOT、XOR）を組むことができます。この論理回路を使うと、四則演算（+−×÷）を行うことができます。
 
 
-![image.gif](/images/books/tar/computer_scicence_2.gif)
+![image.gif](/images/books/tar/computer_science_2.gif)
 
 
+
+
+[bookmark](https://kouyama.sci.u-toyama.ac.jp/main/education/2012/isintro/pdf/text/text06.pdf)
+
+
+[bookmark](http://www.johoka.info/index.php?action=common_download_main&upload_id=1652&nc_session=21b82e29e81f5c4d7366a57118840461)
 
 
 ## CPU（Central Processing Unity）
@@ -65,7 +71,7 @@ published: true
 CPUは半導体の集合体です。主な機能は、シンプルには数値や論理的計算をすることなのですが、その計算により、プログラムの命令を実行し、コンピュータの各部分を制御することができます。。これにより、コンピュータは計算、データの処理、タスクの実行など、多様な作業をこなすことができます。
 
 
-![image.png](/images/books/tar/computer_scicence_3.png =403x)
+![image.png](/images/books/tar/computer_science_3.png =403x)
 
 
 
@@ -95,7 +101,7 @@ x86,x64,ARMなどがある。 |
 CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）、実行（Execute）」の3ステップのサイクルで成り立っています。これを理解することで、CPUがどのようにして命令を処理するかが分かります。
 
 
-![image.png](/images/books/tar/computer_scicence_4.png)
+![image.png](/images/books/tar/computer_science_4.png)
 
 
 
@@ -115,7 +121,7 @@ CPUの動作は基本的に「フェッチ（Fetch）、デコード（Decode）
 GPUは、主に画像処理とレンダリングに特化したコンピュータのプロセッサです。もともとはビデオゲームや3Dグラフィックスを高速に処理するために設計されましたが、その高い計算能力と並列処理能力により、現在ではビデオ編集、画像処理、機械学習、ディープラーニングなど幅広い分野で使用されています。
 
 
-![image.png](/images/books/tar/computer_scicence_5.png)
+![image.png](/images/books/tar/computer_science_5.png)
 
 
 
@@ -138,7 +144,7 @@ GPGPU（General-Purpose computing on Graphics Processing Units）はGPUの計算
 このメモリはデータやプログラムコードの一時的な保存場所として使用され、CPUが直接アクセスしてデータの読み書きを行います
 
 
-![image.png](/images/books/tar/computer_scicence_6.png =512x)
+![image.png](/images/books/tar/computer_science_6.png =512x)
 メモリはよく机の上に例えられる。
 
 
@@ -158,7 +164,7 @@ OSは、**ハードウェアとソフトウェアの仲介**をして両方を�
 ハードウェアとソフトウェアをつなぐ役割。
 
 
-![image.png](/images/books/tar/computer_scicence_7.png)
+![image.png](/images/books/tar/computer_science_7.png)
 
 
 
@@ -214,7 +220,7 @@ BIOSがシステムの初期化とハードウェアの設定を完了した後�
 データを特定のサイズに小分け（128バイト）にして通信をする仕組みです。通信の根幹を支える技術で、より効率よく確実にデータを届けられる仕組みになっています。
 
 
-![image.png](/images/books/tar/computer_scicence_8.png)
+![image.png](/images/books/tar/computer_science_8.png)
 
 
 

@@ -10,8 +10,8 @@
     "build:cs": "node scripts/load_tar.js --slug computer_science --id 33c1985b367242f783cfe0ff20b079dc --index 05",
     "build:cg": "node scripts/load_tar.js --slug computer_graphics --id a8ff5118073d4a47927979597385558f --index 06",
     "build:article1": "node scripts/load_article.js --id 15048e5455a08021ac4bf8b33de8fbe1 --topics vvvv,Chataigne",
-    "build:article2": "node scripts/load_article.js --id 15e48e5455a080979c8bf75fa3daedfc --topics vvvv"
-    
+    "build:article2": "node scripts/load_article.js --id 15e48e5455a080979c8bf75fa3daedfc --topics vvvv",
+    "build:article3": "node scripts/load_article.js --id 1b348e5455a080dbb8eefea6512ef7f5 --topics Unity,RenderGraph,csharp"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",

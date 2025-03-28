@@ -25,6 +25,46 @@ const n2m = new NotionToMarkdown({
     }
 });
 
+// export type BlockType =
+//   | "image"
+//   | "video"
+//   | "file"
+//   | "pdf"
+//   | "table"
+//   | "bookmark"
+//   | "embed"
+//   | "equation"
+//   | "divider"
+//   | "toggle"
+//   | "to_do"
+//   | "bulleted_list_item"
+//   | "numbered_list_item"
+//   | "synced_block"
+//   | "column_list"
+//   | "column"
+//   | "link_preview"
+//   | "link_to_page"
+//   | "paragraph"
+//   | "heading_1"
+//   | "heading_2"
+//   | "heading_3"
+//   | "bulleted_list_item"
+//   | "numbered_list_item"
+//   | "quote"
+//   | "to_do"
+//   | "template"
+//   | "synced_block"
+//   | "child_page"
+//   | "child_database"
+//   | "code"
+//   | "callout"
+//   | "breadcrumb"
+//   | "table_of_contents"
+//   | "link_to_page"
+//   | "audio"
+//   | "unsupported"
+//   | (string & {});
+
 // 画像をダウンロードして連番で保存する
 // 画像のサイズを取得して、サイズを変更する
 
@@ -87,16 +127,21 @@ async　function downloadImage(url, filename) {
 }
 
 n2m.setCustomTransformer("bookmark", async (block) => {
-    const { parent } = block;
+    const { parent, bookmark } = block;
+    console.log("bookmark", block);
     if (!parent) return "";
     //typeの型チェック
     // console.log("bookmark", parent);
-    if (typeof parent != "string") return "";
-    const url = parent.match(/\(([^)]+)\)/)[1];
-    return `${url}\n`;
+    if (typeof bookmark.url == "string") {
+        const url = bookmark.url;
+        return `${url}\n`;
+    };
 });
 
-
+// n2m.setCustomTransformer("link_preview", async (block) => {
+//     console.log("link_preview", block);
+//     return `${block.link}\n`;
+// });
 
 
 n2m.setCustomTransformer("divider", async (block) => {
@@ -141,7 +186,7 @@ const fetch_and_convert_notion = async (data) => {
     console.log(response.properties.title.title[0].plain_text)
 
     const mdblocks = await n2m.pageToMarkdown(data.pageId);
-    // console.log(mdblocks);
+    console.log(mdblocks);
     const mdString = n2m.toMarkdownString(mdblocks);
 
     // joint path

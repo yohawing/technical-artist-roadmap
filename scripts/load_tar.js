@@ -86,15 +86,15 @@ async　function downloadImage(url, filename) {
 
 }
 
-// n2m.setCustomTransformer("bookmark", async (block) => {
-//     const { parent } = block;
-//     if (!parent) return "";
-//     //typeの型チェック
-//     // console.log("bookmark", parent);
-//     if (typeof parent != "string") return "";
-//     const url = parent.match(/\(([^)]+)\)/)[1];
-//     return `${url}\n`;
-// });
+n2m.setCustomTransformer("bookmark", async (block) => {
+    const { parent } = block;
+    if (!parent) return "";
+    //typeの型チェック
+    // console.log("bookmark", parent);
+    if (typeof parent != "string") return "";
+    const url = parent.match(/\(([^)]+)\)/)[1];
+    return `${url}\n`;
+});
 
 
 

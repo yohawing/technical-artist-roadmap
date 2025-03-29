@@ -183,7 +183,7 @@ const fetch_and_convert_notion = async (data) => {
     const response = await notion.pages.retrieve({
         page_id: data.pageId
     })
-    console.log(response.properties.title.title[0].plain_text)
+    console.log(response.properties.Pages.title[0].plain_text)
 
     const mdblocks = await n2m.pageToMarkdown(data.pageId);
     console.log(mdblocks);
@@ -196,7 +196,7 @@ const fetch_and_convert_notion = async (data) => {
     }
 
     const md = FormatZennPage({
-        title: response.properties.title.title[0].plain_text,
+        title: response.properties.Pages.title[0].plain_text,
         topics: '"'+data.topics.replace(",",'","') + '"',
         emoji: response.icon.emoji,
         markdown: mdString.parent

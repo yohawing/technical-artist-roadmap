@@ -1,17 +1,13 @@
-const { Client, LogLevel } = require("@notionhq/client")
-const { NotionToMarkdown } = require("notion-to-md");
 const fs = require('fs');
-const https = require('https');
-const path = require('path');
-const axios = require('axios');
-const sharp = require('sharp');
 const { parseArgs } = require('node:util');
 const NotionZennConverter = require('./notion-zenn-converter');
+const { SlowBuffer } = require('node:buffer');
 
 const NOTION_TOKEN = fs.readFileSync(".notion_token", "utf-8");
-const BASE_PATH = "articles/"
+const BASE_PATH = "books/technical-artist-roadmap/";
+const IMAGE_BASE_PATH = "images/books/tar/";
 
-;(async()=>{
+; (async () => {
 
     // 引数 slug id index から生成
     const { values, positions } = parseArgs({
@@ -23,31 +19,32 @@ const BASE_PATH = "articles/"
             },
             topics: {
                 type: 'string'
+            },
+            slug: {
+                type: 'string'
             }
         }
     });
 
-    if (!values.id) {
-        console.log("id is required");
+    if (!values.id && !values.slug) {
+        console.log("id slug is required");
         process.exit(1);
     }
 
     const converter = new NotionZennConverter(NOTION_TOKEN, {
-        imageSavePath: 'images/articles/',
+        imageSavePath: IMAGE_BASE_PATH,
+        slug: values.slug,
     });
 
-    const response =  await converter.fetch(values.id)
+    const response = await converter.fetch(values.id);
 
-    const mdString = await converter.convert(values.id,{
-        title: response.properties.Pages.title[0].text.content,
-        type: response.properties.Type.select.name || 'tech',
+    const mdString = await converter.convert(values.id, {
+        title: response.properties.title.title[0].text.content,
         emoji: response.icon.emoji || '📝',
-        topics: this.getTopics(response.properties.Topics.multi_select),
-        published_at:response.created_time.replace("T", " ").replace("Z", ""),
     });
 
     // joint path
-    const filePath = BASE_PATH + values.id + ".md";
+    const filePath = BASE_PATH + values.slug + ".md";
     if (!fs.existsSync(BASE_PATH)) {
         fs.mkdirSync(BASE_PATH, { recursive: true });
     }

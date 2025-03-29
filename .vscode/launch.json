@@ -8,7 +8,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "プログラムの起動",
+            "name": "article",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -16,6 +16,21 @@
             "args": [
                 "--id",
                 "1c448e5455a08043b409c547342ade14"
+            ],
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "book",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/scripts/book.js",
+            "args": [
+                "--id",
+                "33c1985b367242f783cfe0ff20b079dc",
+                "--slug",
+                "05_computer_science",
             ],
         }
     ]

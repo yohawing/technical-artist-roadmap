@@ -65,7 +65,7 @@ class NotionZennConverter {
     this.imageSavePath = options.imageSavePath || 'images/';
     this.isDownloadImages = options.saveImages || true;
     this.counter = 1;
-    this.slug = 'default';
+    this.slug = options.slug || None;
 
     // カスタムトランスフォーマーの初期設定
     this.setupCustomTransformers();
@@ -122,12 +122,12 @@ class NotionZennConverter {
         const captionLang = code.caption.length > 0 
           ? code.caption[0].plain_text.replace("c#", 'csharp')
           : '';
-        return `\`\`\`diff ${captionLang}\n${code.rich_text[0].plain_text}\n\`\`\`\n`;
+        return `\`\`\`diff ${captionLang}\n${code.rich_text[0].plain_text}\n\`\`\``;
       }
       
       // Standard code blocks 
       const caption = code.caption.length > 0 ? `:${code.caption[0].plain_text}` : '';
-      return `\`\`\`${language}${caption}\n${code.rich_text[0].plain_text}\n\`\`\`\n`;
+      return `\`\`\`${language}${caption}\n${code.rich_text[0].plain_text}\n\`\`\``;
     });
 
     //toggle
@@ -211,26 +211,21 @@ published: true
     return formattedString;
   }
 
+  async fetch(pageId) {
+    const response = await this.notion.pages.retrieve({ page_id: pageId });
+    return response;
+  }
+
   async convert(pageId, options = {}) {
     // リセット
     this.counter = 1;
-    this.slug = options.slug || pageId;
-
-    // ページ情報の取得
-    const response = await this.notion.pages.retrieve({
-      page_id: pageId
-    });
+    this.slug = this.slug || pageId;
 
     // Markdownへの変換
     const mdblocks = await this.n2m.pageToMarkdown(pageId);
     const mdString = this.n2m.toMarkdownString(mdblocks);
     
-    const zennFormattedString = this.formatZenn(mdString.parent, {
-      title: response.properties.Pages.title[0].text.content,
-      type: response.properties.Type.select.name || 'tech',
-      emoji: response.icon.emoji || '📝',
-      topics: this.getTopics(response.properties.Topics.multi_select),
-    });
+    const zennFormattedString = this.formatZenn(mdString.parent, options);
     return zennFormattedString;
   }
 }

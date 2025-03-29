@@ -8,10 +8,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "article:test": "node scripts/article.js --id 1c448e5455a08043b409c547342ade14",
+    "book:test": "node scripts/book.js --slug 07_computer_science --id 33c1985b367242f783cfe0ff20b079dc",
     "build": "npm run build:cg && npm run build:cs",
-    "build:math": "node scripts/load_tar.js --slug math --id b06a904c37174d62806d5a571b1347ea --index 02",
-    "build:cs": "node scripts/load_tar.js --slug computer_science --id 33c1985b367242f783cfe0ff20b079dc --index 05",
-    "build:cg": "node scripts/load_tar.js --slug computer_graphics --id a8ff5118073d4a47927979597385558f --index 06",
+    "build:math": "node scripts/book.js --slug 02_math --id b06a904c37174d62806d5a571b1347ea",
+    "build:cs": "node scripts/book.js --slug 05_computer_science --id 33c1985b367242f783cfe0ff20b079dc",
+    "build:cg": "node scripts/book.js --slug 06_computer_graphics --id a8ff5118073d4a47927979597385558f",
     "build:article1": "node scripts/load_article.js --id 15048e5455a08021ac4bf8b33de8fbe1 --topics vvvv,Chataigne",
     "build:article2": "node scripts/load_article.js --id 15e48e5455a080979c8bf75fa3daedfc --topics vvvv",
     "build:article3": "node scripts/article.js --id 1b348e5455a080dbb8eefea6512ef7f5 --topics Unity,RenderGraph,csharp"
@@ -21,10 +22,10 @@
     "axios": "^1.6.8",
     "notion-to-md": "^3.1.1",
     "sharp": "^0.33.2",
-    "zenn-cli": "^0.1.154"
+    "zenn-cli": "^0.1.158"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "@types/jest": "^29.5.14"
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0"
   }
 }

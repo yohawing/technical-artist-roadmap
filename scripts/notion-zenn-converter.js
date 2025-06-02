@@ -65,7 +65,7 @@ class NotionZennConverter {
     this.imageSavePath = options.imageSavePath || 'images/';
     this.isDownloadImages = options.saveImages || true;
     this.counter = 1;
-    this.slug = options.slug || None;
+    this.slug = options.slug || false;
 
     // カスタムトランスフォーマーの初期設定
     this.setupCustomTransformers();
@@ -79,19 +79,29 @@ class NotionZennConverter {
 
       let caption = block.image.caption.map(element => element.plain_text).join('');
       caption = caption ? `*${caption}*` : '';
+      try {
+        if (block.image.external != null) {
+          return `![image](${block.image.external.url})\n${block.image.external.url}\n`;
+        }
+        const url = block.image.file.url;
+        const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
+        const filename = `${this.imageSavePath}${this.slug}_${this.counter}.${ext}`;
+        const width = await this.downloadImage(url, path.join(process.cwd(), filename));
 
-      const url = block.image.file.url;
-      const ext = url.match(/\.([0-9a-z]+)(?:[\?#]|$)/i)[1];
-      const filename = `${this.imageSavePath}${this.slug}_${this.counter}.${ext}`;
-      const width = await this.downloadImage(url, path.join(process.cwd(), filename));
+        this.counter++;
 
-      this.counter++;
-
-      if (width >= 1000) {
-        return `![image.${ext}](/${filename})\n${caption}\n`;
-      } else {
-        return `![image.${ext}](/${filename} =${width}x)\n${caption}\n`;
+        if (width >= 1000) {
+          return `![image.${ext}](/${filename})\n${caption}\n`;
+        } else {
+          return `![image.${ext}](/${filename} =${width}x)\n${caption}\n`;
+        }
+          
+      } catch (error) {
+        console.error(`Error downloading image: ${error.message}`);
+        return "failed to download image\n";
       }
+
+      
     });
 
     // その他の共通トランスフォーマー

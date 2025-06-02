@@ -1,10 +1,6 @@
 const { Client, LogLevel } = require("@notionhq/client")
 const { NotionToMarkdown } = require("notion-to-md");
 const fs = require('fs');
-const https = require('https');
-const path = require('path');
-const axios = require('axios');
-const sharp = require('sharp');
 const { parseArgs } = require('node:util');
 const NotionZennConverter = require('./notion-zenn-converter');
 
@@ -42,7 +38,7 @@ const BASE_PATH = "articles/"
         title: response.properties.Pages.title[0].text.content,
         type: response.properties.Type.select.name || 'tech',
         emoji: response.icon.emoji || '📝',
-        topics: this.getTopics(response.properties.Topics.multi_select),
+        topics: converter.getTopics(response.properties.Topics.multi_select),
         published_at:response.created_time.replace("T", " ").replace("Z", ""),
     });
 

@@ -1,5 +1,5 @@
 ---
-title: TouchDesignerでWebRTCを実装する方法 —ビデオ通話とDataChannelの両立—
+title: TouchDesignerでWebRTCを実装する
 type: tech
 topics: ["TouchDesigner", "WebRTC", "Python"]
 emoji: 📹

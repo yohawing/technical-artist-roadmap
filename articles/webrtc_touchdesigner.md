@@ -332,6 +332,10 @@ def sendDataChannelMessage(channelName, message):
 
 ## まとめ
 
+コードの全体は、こちらに置いておきました。
+このまま貼っても動かないので、参照などを自前で設定してあげたりカスタマイズしてあげてください。
+https://gist.github.com/yohawing/d3106fefde2b52671d388622d70f440e
+
 TouchDesignerにはWebRTCDATは用意されていますが、シグナリングサーバーが必要だったりして、実装例が少ないと感じていました。
 
 WebRTCはP2Pで低遅延のリアルタイム映像伝送が可能かつ、1:nの配信もサーバー次第では可能な技術なので、扱えるようになればマルチメディア伝送の幅が広がると感じています。

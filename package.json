@@ -23,7 +23,7 @@
     "axios": "^1.6.8",
     "notion-to-md": "^3.1.9",
     "sharp": "^0.33.2",
-    "zenn-cli": "^0.1.158"
+    "zenn-cli": "^0.2.10"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",

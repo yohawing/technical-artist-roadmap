@@ -1,12 +1,12 @@
 ---
-title: mGear 5.0とueGear 1.0で加速するMaya-UE5連携ワークフロー
+title: mGearでUE5とリグ連携ワークフロー
 type: tech
 topics: ["maya", "mgear", "ueGear", "UE5", "rigging"]
 emoji: ⚙️
 published: false
 ---
 
-## 1. はじめに
+## はじめに
 
 こんにちは、PYのテクニカルアーティストの与羽です。
 
@@ -16,74 +16,54 @@ published: false
 この記事では、新しくなったmGear 5.0のハイライトと、MayaのリグやアニメーションをUE5へスムーズに転送できるueGear 1.0のワークフローについて、その仕組み（Deep Dive）を含めて紹介します。
 「Mayaでリグを作り、UE5のControl Rigとして再利用する」という次世代のフローに興味がある方は、ぜひ一緒に試してみましょう。
 
-## 2. 前提環境 / 準備
+## 前提環境 / 準備
 
 本記事で紹介する機能を使用するための環境要件です。
 
-*   **Maya**: 2022 〜 2026 (2025以降も安心！)
-*   **mGear**: 5.0.0以降
-*   **ueGear**: 1.0.0以降 (mGearに同梱されていますが、プラグイン設定が必要です)
-*   **Unreal Engine**: 5.3 〜 5.5
+-   Maya: 2025 〜 2026
+-   mGear: 5.0.0以降
+-   ueGear: 1.0.0以降 (mGearに同梱されていますが、プラグイン設定が必要です)
+-   Unreal Engine: 5.3 〜 5.5
 
-## 3. ueGearによる連携ワークフロー
+## ueGearによる連携ワークフロー
 
-### 3.1. ueGearとは？: 真のMaya-UEブリッジ
+### mGear/ueGearとは？
 
-ueGearは、MayaとUnreal Engineをつなぐための新しいブリッジツールです。
-単なるFBXエクスポーターにとどまらず、双方向通信によってリグやカメラ、レイアウト情報を同期できるのが特徴です。
+mGearはMaya用のオープンソース・オートリグフレームワークで、キャラクターリグの構築やアニメーション制作を効率化するためのツールセットです。
+ueGearはそのmGearの拡張機能として提供されるUnreal Engine 5向けのプラグインで、MayaとUE5間のデータ転送やリグの再構築をサポートします。
+mGearと連携してMayaで作ったリグをUE5で再構築できる機能が本命で、これが実現できると
 
-![予定: ueGearのメニュー画面のキャプチャ](TODO)
-*Maya側のueGearメニュー*
 
-### 3.2. セットアップ
-
-まずはツールが通信できるようにセットアップを行います。
-
-1.  **Maya側**: mGearメニューから `ueGear` がロードされていることを確認します。
-2.  **UE5側**: Python Scripting プラグインを有効にし、Project SettingsでPythonのリモート実行を許可します。
-
-:::message
-ueGearはUE5の「Python Remote Execution」機能を利用して通信を行います。これについては後ほどの技術トピックで解説します。
-:::
-
-### 3.3. MayaからUE5へリグを送る
-
-従来のGame Exporterも健在ですが、ueGearを使うとよりインタラクティブに送信できます。
-
-1.  MayaでmGearのリグ（ガイドまたはリグ本体）を選択します。
-2.  **mGear** -> **ueGear** -> **Export / Import** メニューを開きます。
-3.  `Push Selection` ボタンを押します。
-4.  選択したオブジェクトがUE5の現在開いているレベルやコンテンツブラウザに転送されます。
-
-### 3.4. 目玉機能：Control Rigとしてリビルド
+### 目玉機能：Control Rigとしてリビルド
 
 今回の最大の見どころ、**mGearリグのControl Rig変換**です。
-Maya上で組んだガイド情報を元に、UE5上で対応するControl Rigノードを自動的に組み上げてくれます。
+Maya上で組んだリグの情報を元に、UE5上で対応するControl Rigノードを自動的に組み上げてくれます。
 
 #### 自動変換のためのリグ構築手順
 
-Control Rigへの自動変換を行うには、標準のShifter Componentではなく **EPIC Components** を使用するのが最も確実です。
-ゼロから組むよりも、用意されているテンプレートを使用するのが推奨されています。
+Control Rigへの自動変換を行うには、標準のShifter Componentではなく **EPIC Components** を使用する必要があります。
+Epic Componentsは、mGearに同梱されているUE5向けのコンポーネント群で、UE5のControl Rigに対応した構造を持っています。
 
-1.  **テンプレートのロード**:
-    *   Mayaメニュー: `mGear` -> `Shifter` -> `Guide Template Samples`
-    *   `UE_Mannequin_Template.sgt` (または `Metahuman` 関連) を選択します。
-2.  **ガイドの調整**:
-    *   ロードされたガイドは、UE5マネキン互換の構造（EPICコンポーネントで構成）になっています。
-    *   これを自社のキャラクターに合わせて配置調整します。
-3.  **リグのビルド**:
-    *   通常通り `Build Rig` を実行します。
-    *   生成されたリグには、Control Rig変換に必要なタグ情報が自動的に埋め込まれます。
+1.  テンプレートのロード:
+    -   Mayaメニュー: `mGear` -> `Shifter` -> `Guide Template Samples`
+    -   `UE_Mannequin_Template.sgt` (または `Metahuman` 関連) を選択します。
+2.  ガイドの調整:
+    -   ロードされたガイドは、UE5マネキン互換の構造（EPICコンポーネントで構成）になっています。
+    -   これをリグを入れたいキャラクターに合わせて配置調整します。
+3.  リグのビルド:
+    -   通常通り `Build Rig` を実行します。
+    -   生成されたリグには、Control Rig変換に必要なタグ情報が自動的に埋め込まれます。
+4.  通常通りスキニング作業を行います。mGearのDataCentricRiggingに基づきすべてスクリプトで自動化できるように、ウェイト情報を保存しながらスキニングをすることをお勧めします。
 
 :::message alert
 **重要**: この機能を使用するには、Mayaのリグ構築時に **「EPIC Components」** を使用している必要があります（例：`EPIC_leg_01` など）。
 標準のShifter Componentでは、現時点ではこの自動変換に対応していませんのでご注意ください。
 :::
 
-4.  **Control Rigの生成**:
-    *   UE5側でSkeletal Meshをインポートしておきます。
-    *   MayaのueGearメニューから `Build Control Rig` を実行します。
-    *   UE5のPythonが走り、Control Rigアセットが生成されます！
+4.  Control Rigの生成:
+    -   UE5側でSkeletal Meshをインポートしておきます。
+    -   MayaのueGearメニューから `Build Control Rig` を実行します。
+    -   UE5のPythonが走り、Control Rigアセットが生成されます！
 
 ![予定: 生成されたControl Rigのノードグラフ](TODO)
 *自動生成されたControl Rig。ノードがつながっている様子がわかります。*
@@ -116,7 +96,7 @@ Control Rigへの自動変換を行いたい場合は、`ueGear Builder` に対�
 | `EPIC_spine_02` | ✅ | |
 | `EPIC_spine_cartoon_01` | - | |
 
-### 3.5. その他の強力な機能
+### その他の強力な機能
 
 ueGearには、Control Rig以外にもパイプラインを効率化する便利な機能が備わっています。
 ソースコードから読み取れる「できること・できないこと」を整理しました。
@@ -125,34 +105,34 @@ ueGearには、Control Rig以外にもパイプラインを効率化する便利
 
 Mayaのカメラを、UE5のCineCameraActorとして同期します。
 
-*   **できること**: トランスフォーム（移動・回転）、焦点距離 (Focal Length)、絞り (Aperture) の同期（アニメーション対応）。
-*   **できないこと**: ポストプロセス設定やFocus Distanceなどの詳細パラメータの同期。
+-   できること: トランスフォーム（移動・回転）、焦点距離 (Focal Length)、絞り (Aperture) の同期（アニメーション対応）。
+-   できないこと: ポストプロセス設定やFocus Distanceなどの詳細パラメータの同期。
 
 #### 2. レイアウトの転送 (`import_layout_from_unreal`)
 
 UE5のレベル上に配置されたアクターを、Mayaに読み込みます。
 
-*   **できること**: StaticMeshActorのインスタンス配置としての読み込み。
-*   **できないこと**: SkeletalMeshやライト、BPアクターの完全な再現。あくまで背景レイアウトのアタリ用です。
+-   できること: StaticMeshActorのインスタンス配置としての読み込み。
+-   できないこと: SkeletalMeshやライト、BPアクターの完全な再現。あくまで背景レイアウトのアタリ用です。
 
 #### 3. シーケンサー連携 (`update_unreal_sequencer_from_maya`)
 
 Mayaのカメラアニメーションを、UE5のシーケンサー上のトラックとして更新します。
 
-*   **できること**: 既存のLevel Sequenceに対するカメラトラック（Transform/Focal/Aperture）の更新。
-*   **できないこと**:
-    *   **リグアニメーションの直接転送**: Mayaのリグコントローラーのアニメーションを直接Control Rigトラックにキーフレームとして流し込む機能はありません。
-    *   **新規シーケンス作成**: 空のシーケンスをUE5側で用意しておく必要があります。
+-   できること: 既存のLevel Sequenceに対するカメラトラック（Transform/Focal/Aperture）の更新。
+-   できないこと:
+    -   リグアニメーションの直接転送: Mayaのリグコントローラーのアニメーションを直接Control Rigトラックにキーフレームとして流し込む機能はありません。
+    -   新規シーケンス作成: 空のシーケンスをUE5側で用意しておく必要があります。
 
 :::message
 リグのアニメーションをUE5に送る場合は、通常通りFBX経由でAnimation Sequenceとしてインポートし、シーケンサーで使用するのが基本フローとなります。
 :::
 
-## 4. 技術トピック: 実装の裏側
+## 技術トピック: 実装の裏側
 
 ここからは少しTech寄りの話、実装の仕組みについて解説します。
 
-### 4.1. Maya <-> UE5 通信の仕組み
+### Maya <-> UE5 通信の仕組み
 
 MayaとUE5はどうやって通信しているのでしょうか？
 独自ソケット？ いいえ、実はUE5標準の機能をうまく活用しています。
@@ -162,29 +142,29 @@ MayaとUE5はどうやって通信しているのでしょうか？
 
 独自のソケット通信サーバーを立てる必要がなく、ファイアウォール設定などもUE5標準に準拠できるため、非常に賢い設計だと言えます。
 
-### 4.2. Control Rig構築ロジックの所在
+### Control Rig構築ロジックの所在
 
 「Mayaのガイド情報をどうやってUE5のControl Rigノードに変換しているのか？」
 気になってMaya側のソース (`uegear/commands.py`) を探してみましたが、そこにロジックはありませんでした。
 
 実は、以下の連携プレーで実現されています。
 
-1.  **Maya側**: ガイドのルートノードから `MGEAR_UE_CONTROL_RIG_TAG` という属性（JSONデータ）を読み取ります。
-2.  **Bridge**: そのJSONデータを引数として、UE5に対して `build_control_rig_from_maya_guide` コマンドを投げます。
-3.  **UE5側**: 実際のノード構築は、UE側のプラグイン (**[mgear-dev/ueGear](https://github.com/mgear-dev/ueGear)**) 内にあるPythonスクリプトが担当します。
-    *   `Plugins/ueGear/Content/Python/ueGear/controlrig/components` 配下に、`EPIC_leg_01.py` などのビルドスクリプトが存在します。
+1.  Maya側: ガイドのルートノードから `MGEAR_UE_CONTROL_RIG_TAG` という属性（JSONデータ）を読み取ります。
+2.  Bridge: そのJSONデータを引数として、UE5に対して `build_control_rig_from_maya_guide` コマンドを投げます。
+3.  UE5側: 実際のノード構築は、UE側のプラグイン ([mgear-dev/ueGear](https://github.com/mgear-dev/ueGear)) 内にあるPythonスクリプトが担当します。
+    -   `Plugins/ueGear/Content/Python/ueGear/controlrig/components` 配下に、`EPIC_leg_01.py` などのビルドスクリプトが存在します。
 
 つまり、もし独自のコンポーネントをControl Rigに対応させたいなら、Maya側ではなく **UE5側のPythonスクリプトを拡張する必要がある** ということです。
 
-## 5. まとめ
+## まとめ
 
 mGear 5.0とueGear 1.0によって、MayaとUE5のリギングパイプラインはより密接につながりました。
 特に「EPIC Componentsを使ってリグを組み、UE5でControl Rigとして再利用する」というフローは、今後のスタンダードになる可能性を秘めています。
 
 ぜひ最新版をダウンロードして、次世代のワークフローを体感してみてくださいね！
 
-## 6. 参考記事
+## 参考記事
 
-*   [mGear 公式ドキュメント](https://mgear4.readthedocs.io/en/master/)
-*   [mGear GitHub Repository](https://github.com/mgear-dev/mgear)
-*   [ueGear GitHub Repository](https://github.com/mgear-dev/ueGear)
+-   [mGear 公式ドキュメント](https://mgear4.readthedocs.io/en/master/)
+-   [mGear GitHub Repository](https://github.com/mgear-dev/mgear)
+-   [ueGear GitHub Repository](https://github.com/mgear-dev/ueGear)

@@ -45,23 +45,30 @@ Maya上で組んだリグの情報を元に、UE5上で対応するControl Rig�
 Control Rigへの自動変換を行うには、標準のShifter Componentではなく**EPIC Components**を使用する必要があります。
 EPIC Componentsは、mGearに同梱されているUE5向けのコンポーネント群で、UE5のControl Rigに対応した構造を持っています。
 
-![EPIC Componentsの一覧](/images/articles/uegear02.png)
-
 :::message
 GuideManagerにもEPIC Componentsが登録されていますが、現状手動でリグを組むとUEでビルドできないケースがあります。確実に動作させるには、**テンプレートからガイドをロードする方法**をお勧めします。
 :::
 
+
 ![テンプレート選択画面](/images/articles/uegear03.png)
+
 
 ### 手順1：テンプレートのロード
 
 Mayaメニューから `mGear` → `Shifter` → `Guide Template Samples` を開きます。
 `UE_Mannequin_Template.sgt`（またはMetahuman関連のテンプレート）を選択してください。
 
+
+![EPIC Componentsの一覧](/images/articles/uegear02.png)
+
+
+
 ### 手順2：ガイドの調整
 
 ロードされたガイドは、UE5マネキン互換の構造（EPIC Componentsで構成）になっています。
 これをリグを入れたいキャラクターに合わせて配置調整します。
+
+
 
 ### 手順3：リグのビルド
 
@@ -138,10 +145,11 @@ Control Rigへの自動変換を行いたい場合は、`ueGear Builder`に対�
 
 ## まとめ
 
-mGear 5とueGearによって、MayaとUE5のリギングパイプラインはより密接につながりました。
-特に「EPIC Componentsを使ってリグを組み、UE5でControl Rigとして再利用する」というフローは、今後のスタンダードになる可能性を秘めています。
+mGear 5とueGearによって、MayaとUE5のリギングパイプラインはより便利になる可能性を秘めています。
+MayaからUE5のPythonを実行できるような、Python Remote Executionの仕組みも用意されており、将来的にはさらに自動化が進むことが期待されます。
 
-ぜひ最新版をダウンロードして、次世代のワークフローを体感してみてください！
+正直、まだまだバグも多く、発展途上な面もありますが、自力で問題を解決できればかなり便利なツールになるでしょう。
+この記事を書くに当たってもさまざまな試行錯誤がありましたが、その過程で多くのことを学びました。mGearとueGearの今後の発展に期待しつつ、皆さんもぜひ挑戦してみてください！
 
 ## 参考記事
 

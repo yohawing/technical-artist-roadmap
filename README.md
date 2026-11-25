@@ -8,3 +8,10 @@
 ※）これらの記事はChatGPTの力を借りながら、インターネット上の知識を見ながら勉強してまとめた記事になります。それぞれの単元については素人レベルであるため、正しい説明・わかりやすい解説などは、他の記事を参照ください。
 
 https://zenn.dev/yohawing/books/b7167b92976b96
+## 執筆方法
+
+記事・本はすべてこのリポジトリの Markdown で直接書きます（Notion からの変換は廃止しました）。
+
+- プレビュー: `npm start`
+- 新しい記事: `npm run new:article -- --slug <slug>`
+- 文体・構成: [YOHA_FORMAT.md](YOHA_FORMAT.md)

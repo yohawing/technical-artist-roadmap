@@ -29,12 +29,10 @@ published: false
 1本目は10月の虎ノ門広告祭で展示した「ウワサの待合所」です。レトロテレビ型の頭部を載せた5体のマネキンが普段は掛け合い劇を流し、きっかけを与えるとVoiceAgent対話に切り替わります。制作ツールから配信基盤まで約1ヶ月で作りました。
 
 ![「ウワサの待合所」の展示イメージ](/images/articles/voice_agent_uwasa.gif)
-*レトロテレビ型の頭部にドット絵の顔を映した「ウワサの待合所」*
 
 2本目は11月展示の「ラブシャトル」です。体験者1人と、宇宙船の窓を背にしたキャラパネル3体（顔モニター＋個別スピーカー内蔵）が即興の恋愛リアリティ番組を繰り広げます。お土産動画ページまで含め約3週間で作りました。
 
 ![「ラブシャトル」の展示イメージ](/images/articles/voice_agent_loveshuttle.gif)
-*パネルの顔部分に小型モニターを埋め込んだ「ラブシャトル」*
 
 どちらもPoC・R&Dの色合いが強く、限られた期間で体験を盛り込み、展示中にもすぐ改善を回す必要がありました。
 
@@ -44,7 +42,7 @@ published: false
 
 今回の制作ではほとんどコードを読んでいません。やりたいことをひたすら言葉にしてエージェントへ伝え、動きを見ながら舵を切る進め方でした。
 
-ただ丸投げすれば走り切れるわけではなく、人間側で意識して整えたポイントが大きく3つあります。
+ただ丸投げすれば走り切れるわけではなく、人間側で意識して整えたポイントが大きく4つあります。
 
 ### 最新AIを追いかけてすぐ乗り換える
 
@@ -80,6 +78,18 @@ published: false
 
 現場へ行くと音環境は変わるので1回録って終わりではありませんが、物理のボトルネックをデータ化してAIへ渡すだけで、検証精度と改善スピードは段違いに上がりました。
 
+### チームとAIをまたぐ協力のしかた
+
+複数人で協力して作るとき、Git共有を前提にそれぞれのメンバーが自分のCodingAgentと動く体制にできます。そのうえで「細かい開発用の便利ツールをクラウドのブラウザ上にどんどん作っておく」やり方がかなり効きました。
+
+たとえば「ウワサの待合所」では、AI同士の会話データを作ってくれるメンバーが、CodingAgentで作ったデータをブラウザから転送してすぐ動作チェックできるツールを用意しました。また、複数人とAIが高速にコミットを重ねるため、最初にCIを組んでおけばよかったのは反省点です。
+
+![人間同士で目的を話し合いながらそれぞれのAIがクラウドツール越しに協力するイメージ](/images/articles/voice_agent_08_team.jpg)
+
+人との協力のしかたも変わります。相手もCodingAgentと一緒に動く前提なら、細かな手順を指示するより「**まずやりたいことの目的を共有し、細かい実装はそれぞれのAIに任せる**」ほうがうまく回ります。
+
+その代わり、お互いが依存するデータ形式や境界の情報だけは、人間同士できちんとコミュニケーションを取りながら握っていく。そんな役割分担がちょうどよかったです。
+
 ---
 
 ## 技術トピック：システム設計の裏側
@@ -90,46 +100,213 @@ published: false
 
 2作目「ラブシャトル」の構成図です。自宅のCodingAgentが、Tailscale VPNとCloudflare API経由で会場の複数PCへデプロイ・監視・操作まで一気通貫で届きます。
 
-```mermaid
-flowchart TB
-  subgraph Dev["開発環境（司令塔）"]
-    AGENT["CodingAgent + 開発PC\n(デプロイ / 監視 / 検証)"]
-  end
+```html-embed
+<div class="va-arch">
+  <input class="va-r" type="radio" name="va-m" id="va-ops" checked>
+  <input class="va-r" type="radio" name="va-m" id="va-live">
 
-  subgraph Edge["Cloudflare（外部・管理レイヤー）"]
-    ADMIN["管理・運営画面 / API\n(状態監視・再起動・操作口)"]
-    REC["受付Worker + DO + R2\n(QR受付・お土産ページ)"]
-  end
+  <div class="va-bar">
+    <label class="va-t t-ops" for="va-ops">運用・監視</label>
+    <label class="va-t t-live" for="va-live">本番の音声</label>
+  </div>
 
-  subgraph Venue["展示会場（Tailscale VPN + 会場LAN）"]
-    subgraph MainPC["メインPC (Windows / RTX 5090)"]
-      STUDIO["スタジオWorker + Room DO\n(番組制御・外部API中継)"]
-      TAB["再生担当ブラウザ\n(SM58録音・音声中継)"]
-      HAAS["ローカルSTT\n(Haas-ASR on WSL2)"]
-    end
+  <svg class="va-svg" viewBox="0 0 680 280" role="img" aria-label="自宅の司令塔PCからTailscaleとCloudflareを経由して展示会場の2台のPCと外部AIにつながる構成図">
+    <defs>
+      <marker id="arr-t" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 1 2 L 8 5 L 1 8 z" class="mk-t"/>
+      </marker>
+      <marker id="arr-o" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 1 2 L 8 5 L 1 8 z" class="mk-o"/>
+      </marker>
+    </defs>
 
-    subgraph SubPC["顔表示PC (Linux)"]
-      BRIDGE["顔表示ブリッジ\n(Node.js WSサーバー)"]
-      RH["RenderHost ×3\n(顔モニター3面 + USB音声3系統)"]
-    end
-  end
+    <!-- 会場エリア枠 -->
+    <rect x="330" y="18" width="212" height="244" rx="18" class="zone"/>
+    <text x="436" y="39" text-anchor="middle" class="z-lbl">展示会場</text>
 
-  subgraph AI["外部AI API（差し替え・フォールバック前提）"]
-    EL["ElevenLabs\n(演者 / TTS / Scribe v3)"]
-    LLM["Director LLM\n(Claude / Sol via OpenRouter等)"]
-  end
+    <!-- 運用・監視ライン (Teal) -->
+    <g class="g-ops">
+      <path id="p-ssh" d="M 148 92 C 230 92, 260 104, 352 104" class="wire w-t"/>
+      <path id="p-cf"  d="M 148 118 C 195 140, 200 175, 224 195" class="wire w-t"/>
+      <path id="p-tun" d="M 288 195 C 320 195, 330 120, 352 118" class="wire w-t"/>
+      <circle r="4.5" class="dot d-t"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#p-ssh"/></animateMotion></circle>
+      <circle r="4.5" class="dot d-t"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#p-cf"/></animateMotion></circle>
+      <circle r="4.5" class="dot d-t"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#p-tun"/></animateMotion></circle>
+      <text x="242" y="84" text-anchor="middle" class="lbl-s c-t">Tailscale SSH</text>
+    </g>
 
-  AGENT -->|Tailscale SSH / git bundle| MainPC
-  AGENT -->|Tailscale SSH / git bundle| SubPC
-  AGENT <-->|HTTP API / 定期ポーリング| ADMIN
-  ADMIN <-->|WebSocket / Tunnel| STUDIO
-  REC <--> STUDIO
-  STUDIO <--> EL
-  STUDIO <--> LLM
-  STUDIO <--> HAAS
-  STUDIO <--> TAB
-  TAB -->|16kHz PCM + 制御 WS| BRIDGE
-  BRIDGE -->|stdin/stdout JSON Lines| RH
+    <!-- 本番音声ライン (Orange) -->
+    <g class="g-live">
+      <path id="p-ai"   d="M 508 104 L 566 104" class="wire w-o"/>
+      <path id="p-lan"  d="M 436 138 L 436 178" class="wire w-o"/>
+      <path id="p-rec"  d="M 288 205 C 320 205, 330 128, 352 126" class="wire w-o"/>
+      <circle r="4.5" class="dot d-o"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#p-ai"/></animateMotion></circle>
+      <circle r="4.5" class="dot d-o"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#p-lan"/></animateMotion></circle>
+      <circle r="4.5" class="dot d-o"><animateMotion dur="2.0s" repeatCount="indefinite"><mpath href="#p-rec"/></animateMotion></circle>
+      <text x="466" y="162" class="lbl-s c-o">LAN</text>
+    </g>
+
+    <!-- 1. 自宅 司令塔PC -->
+    <g class="node n-ops" transform="translate(36, 56)">
+      <rect width="112" height="86" rx="14" class="card"/>
+      <!-- ノートPC + ロボ顔アイコン -->
+      <rect x="33" y="14" width="46" height="30" rx="6" class="ico-t"/>
+      <circle cx="48" cy="27" r="2.5" class="ico-eye"/>
+      <circle cx="64" cy="27" r="2.5" class="ico-eye"/>
+      <path d="M 51 35 Q 56 39 61 35" class="ico-smile"/>
+      <path d="M 26 48 L 86 48" class="ico-stroke"/>
+      <text x="56" y="69" text-anchor="middle" class="lbl">自宅・AI</text>
+    </g>
+
+    <!-- 2. Cloudflare -->
+    <g class="node n-both" transform="translate(184, 160)">
+      <rect width="104" height="80" rx="14" class="card"/>
+      <!-- 雲アイコン -->
+      <path d="M 34 42 C 26 42 24 30 33 28 C 35 19 49 18 53 25 C 62 24 68 31 65 39 C 64 42 60 42 56 42 Z" class="ico-o"/>
+      <text x="52" y="64" text-anchor="middle" class="lbl">Cloudflare</text>
+    </g>
+
+    <!-- 3. 会場 メインPC -->
+    <g class="node n-both" transform="translate(352, 56)">
+      <rect width="156" height="82" rx="14" class="card"/>
+      <!-- PCタワー + マイクアイコン -->
+      <rect x="42" y="14" width="26" height="34" rx="5" class="ico-n"/>
+      <circle cx="55" cy="25" r="5" class="ico-fan"/>
+      <circle cx="55" cy="39" r="2" class="ico-eye"/>
+      <rect x="86" y="16" width="12" height="20" rx="6" class="ico-o"/>
+      <path d="M 82 28 A 10 10 0 0 0 102 28 M 92 38 L 92 46 M 86 46 L 98 46" class="ico-stroke"/>
+      <text x="78" y="68" text-anchor="middle" class="lbl">メインPC</text>
+    </g>
+
+    <!-- 4. 会場 顔表示PC ×3 -->
+    <g class="node n-both" transform="translate(352, 178)">
+      <rect width="156" height="72" rx="14" class="card"/>
+      <!-- 3つの笑顔モニター -->
+      <g transform="translate(22, 14)">
+        <rect x="0" y="0" width="32" height="24" rx="5" class="ico-v"/>
+        <circle cx="11" cy="10" r="2" class="ico-eye"/><circle cx="21" cy="10" r="2" class="ico-eye"/>
+        <path d="M 12 16 Q 16 19 20 16" class="ico-smile"/>
+      </g>
+      <g transform="translate(62, 14)">
+        <rect x="0" y="0" width="32" height="24" rx="5" class="ico-t"/>
+        <circle cx="11" cy="10" r="2" class="ico-eye"/><circle cx="21" cy="10" r="2" class="ico-eye"/>
+        <path d="M 12 16 Q 16 19 20 16" class="ico-smile"/>
+      </g>
+      <g transform="translate(102, 14)">
+        <rect x="0" y="0" width="32" height="24" rx="5" class="ico-o"/>
+        <circle cx="11" cy="10" r="2" class="ico-eye"/><circle cx="21" cy="10" r="2" class="ico-eye"/>
+        <path d="M 12 16 Q 16 19 20 16" class="ico-smile"/>
+      </g>
+      <text x="78" y="59" text-anchor="middle" class="lbl">顔モニター ×3</text>
+    </g>
+
+    <!-- 5. 外部AI -->
+    <g class="node n-live" transform="translate(566, 62)">
+      <rect width="94" height="84" rx="14" class="card"/>
+      <!-- キラキラAIアイコン -->
+      <path d="M 47 14 L 52 29 L 67 34 L 52 39 L 47 54 L 42 39 L 27 34 L 42 29 Z" class="ico-y"/>
+      <text x="47" y="70" text-anchor="middle" class="lbl">外部AI</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .va-arch {
+    --bg: #f8f6f1;
+    --card: #ffffff;
+    --zone: #efeae0;
+    --ink: #1e293b;
+    --muted: #64748b;
+    --line: #cbd5e1;
+    --teal: #0d9488;
+    --orange: #f97316;
+    --violet: #8b5cf6;
+    --yellow: #eab308;
+    --navy: #334155;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 12px 14px 8px;
+  }
+  [data-theme="dark"] .va-arch {
+    --bg: #131822;
+    --card: #1d2534;
+    --zone: #18202e;
+    --ink: #f1f5f9;
+    --muted: #94a3b8;
+    --line: #334155;
+    --teal: #2dd4bf;
+    --orange: #fb923c;
+    --violet: #a78bfa;
+    --yellow: #facc15;
+    --navy: #60a5fa;
+  }
+  .va-r { position: absolute; opacity: 0; pointer-events: none; }
+  .va-bar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .va-t {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--zone);
+    color: var(--muted);
+    border: 1px solid var(--line);
+    user-select: none;
+  }
+  #va-ops:checked ~ .va-bar .t-ops { background: var(--teal); color: #fff; border-color: var(--teal); }
+  #va-live:checked ~ .va-bar .t-live { background: var(--orange); color: #fff; border-color: var(--orange); }
+  [data-theme="dark"] #va-ops:checked ~ .va-bar .t-ops,
+  [data-theme="dark"] #va-live:checked ~ .va-bar .t-live { color: #0f172a; }
+
+  .va-svg { width: 100%; height: auto; display: block; max-height: 360px; }
+  .zone { fill: var(--zone); stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 5 5; }
+  .z-lbl { fill: var(--muted); font-size: 12px; font-weight: 700; }
+  .card { fill: var(--card); stroke: var(--line); stroke-width: 2; transition: stroke 0.25s; }
+  .lbl { fill: var(--ink); font-size: 13px; font-weight: 700; }
+  .lbl-s { font-size: 11px; font-weight: 700; }
+  .c-t { fill: var(--teal); }
+  .c-o { fill: var(--orange); }
+
+  .ico-t { fill: var(--teal); }
+  .ico-o { fill: var(--orange); }
+  .ico-v { fill: var(--violet); }
+  .ico-n { fill: var(--navy); }
+  .ico-y { fill: var(--yellow); }
+  .ico-eye { fill: #fff; }
+  .ico-fan { fill: none; stroke: #fff; stroke-width: 2; }
+  .ico-smile { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+  .ico-stroke { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; }
+
+  .wire { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+  .w-t { stroke: var(--teal); }
+  .w-o { stroke: var(--orange); }
+  .d-t { fill: var(--teal); }
+  .d-o { fill: var(--orange); }
+
+  .g-ops, .g-live, .node { transition: opacity 0.25s; }
+  #va-ops:checked ~ .va-svg .g-live,
+  #va-ops:checked ~ .va-svg .n-live { opacity: 0.22; }
+  #va-ops:checked ~ .va-svg .n-ops .card,
+  #va-ops:checked ~ .va-svg .n-both .card { stroke: var(--teal); }
+
+  #va-live:checked ~ .va-svg .g-ops,
+  #va-live:checked ~ .va-svg .n-ops { opacity: 0.22; }
+  #va-live:checked ~ .va-svg .n-live .card,
+  #va-live:checked ~ .va-svg .n-both .card { stroke: var(--orange); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot { display: none; }
+  }
+</style>
 ```
 
 1作目「ウワサの待合所」も基本思想は同じです。Cloudflare Workers + D1 + R2で作品配布と端末管理を束ね、各卓PCが `TableController`（Python）と `RenderHost`（C++）で描画・音声出力を回しています。
@@ -141,7 +318,6 @@ flowchart TB
 単体モードを3プロセス並列起動し、手前の薄いNode.jsブリッジからJSON Linesで制御する構成にすることで、短期間で3体運用へ対応しています。
 
 ![2作品で共通化した4列×8行の表情SpriteSheet（左：ウワサの待合所、右：ラブシャトル）](/images/articles/voice_agent_spritesheets.png)
-*画風はまったく違いますが、4列×8行のスプライトシート仕様を統一して同じRenderHostで動かしています*
 
 表情シート（`expression-spritesheet` v2）も統一しました。横4フレーム×縦8表情を並べ、会話用の7行を「F1: 閉、F2: 小、F3: 大、F4: 瞬き」として音量で口パクさせます。待機行を瞬き専用にし、聞き手の口が動く事故を構造的に防ぎました。
 
@@ -186,6 +362,124 @@ AIが自分で叩いて数値を見られる検証環境を、本編と並行し
 
 Directorは会話を止めないよう2発話ごとに非同期で呼び、Prompt Cachingが効く入力順＋Structured Outputで評価と指示を返させます。画面見出し（`chip`: 12字）と演者用の非公開本文（`text`: 40字）を分け、カンペ朗読も防ぎました。
 
+```html-embed
+<div class="va-dir">
+  <svg class="vd-svg" viewBox="0 0 680 230" role="img" aria-label="表の会話レーンをルールで止めずに回しつつ、裏レーンからDirectorがカンペを差し込む2層構造の図">
+    <!-- 表レーン（会話の道） -->
+    <rect x="24" y="24" width="632" height="84" rx="18" class="vd-lane-top"/>
+    <text x="42" y="47" class="vd-tag t-o">表の会話（止めない）</text>
+    <path id="vd-main" d="M 105 74 L 580 74" class="vd-track tr-o"/>
+    <circle r="5" class="vd-ball b-o"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#vd-main"/></animateMotion></circle>
+
+    <!-- 体験者アイコン -->
+    <g transform="translate(64, 52)">
+      <circle cx="22" cy="14" r="11" class="vd-o"/>
+      <path d="M 6 40 C 6 28, 38 28, 38 40 Z" class="vd-o"/>
+    </g>
+
+    <!-- 関所：ルール優先 -->
+    <g transform="translate(248, 44)">
+      <rect width="120" height="52" rx="12" class="vd-gate"/>
+      <!-- 盾アイコン -->
+      <path d="M 24 14 L 36 18 L 36 27 C 36 34 30 38 24 40 C 18 38 12 34 12 27 L 12 18 Z" class="vd-n"/>
+      <text x="46" y="31" class="vd-lbl">ルール優先</text>
+    </g>
+
+    <!-- 演者3画面アイコン -->
+    <g transform="translate(520, 54)">
+      <rect x="0" y="0" width="32" height="26" rx="6" class="vd-v"/>
+      <rect x="38" y="0" width="32" height="26" rx="6" class="vd-t"/>
+      <rect x="76" y="0" width="32" height="26" rx="6" class="vd-o"/>
+      <circle cx="11" cy="11" r="2" class="vd-eye"/><circle cx="21" cy="11" r="2" class="vd-eye"/>
+      <circle cx="49" cy="11" r="2" class="vd-eye"/><circle cx="59" cy="11" r="2" class="vd-eye"/>
+      <circle cx="87" cy="11" r="2" class="vd-eye"/><circle cx="97" cy="11" r="2" class="vd-eye"/>
+    </g>
+
+    <!-- 裏レーン（非同期Director） -->
+    <rect x="24" y="130" width="632" height="78" rx="18" class="vd-lane-bot"/>
+    <text x="42" y="153" class="vd-tag t-t">裏で非同期</text>
+
+    <!-- 表→裏の観察線 & 裏→表のカンペ差し込み線 -->
+    <path id="vd-sub" d="M 164 74 C 164 138, 180 174, 240 174 L 440 174 C 482 174, 492 142, 492 78" class="vd-track tr-t"/>
+    <circle r="4.5" class="vd-ball b-t"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#vd-sub"/></animateMotion></circle>
+
+    <!-- Director ロボ + カンペ -->
+    <g transform="translate(274, 145)">
+      <rect width="144" height="50" rx="12" class="vd-card"/>
+      <rect x="14" y="11" width="28" height="24" rx="6" class="vd-t"/>
+      <circle cx="23" cy="21" r="2" class="vd-eye"/><circle cx="33" cy="21" r="2" class="vd-eye"/>
+      <text x="54" y="30" class="vd-lbl">Director AI</text>
+    </g>
+
+    <!-- カンペアイコン -->
+    <g transform="translate(466, 102)">
+      <rect width="54" height="30" rx="8" class="vd-cue"/>
+      <text x="27" y="19" text-anchor="middle" class="vd-cue-t">カンペ</text>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .va-dir {
+    --bg: #f8f6f1;
+    --card: #ffffff;
+    --top: #fff7ed;
+    --bot: #f0fdfa;
+    --ink: #1e293b;
+    --line: #cbd5e1;
+    --teal: #0d9488;
+    --orange: #f97316;
+    --violet: #8b5cf6;
+    --navy: #334155;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 8px;
+  }
+  [data-theme="dark"] .va-dir {
+    --bg: #131822;
+    --card: #1d2534;
+    --top: #261b14;
+    --bot: #102627;
+    --ink: #f1f5f9;
+    --line: #334155;
+    --teal: #2dd4bf;
+    --orange: #fb923c;
+    --violet: #a78bfa;
+    --navy: #60a5fa;
+  }
+  .vd-svg { width: 100%; height: auto; display: block; max-height: 270px; }
+  .vd-lane-top { fill: var(--top); stroke: var(--orange); stroke-opacity: 0.35; stroke-width: 1.5; }
+  .vd-lane-bot { fill: var(--bot); stroke: var(--teal); stroke-opacity: 0.4; stroke-width: 1.5; stroke-dasharray: 6 5; }
+  .vd-tag { font-size: 12px; font-weight: 700; }
+  .t-o { fill: var(--orange); }
+  .t-t { fill: var(--teal); }
+  .vd-track { fill: none; stroke-width: 3; stroke-linecap: round; }
+  .tr-o { stroke: var(--orange); stroke-opacity: 0.45; }
+  .tr-t { stroke: var(--teal); stroke-dasharray: 5 5; stroke-opacity: 0.6; }
+  .b-o { fill: var(--orange); }
+  .b-t { fill: var(--teal); }
+  .vd-gate, .vd-card { fill: var(--card); stroke: var(--line); stroke-width: 2; }
+  .vd-gate { stroke: var(--navy); }
+  .vd-card { stroke: var(--teal); }
+  .vd-lbl { fill: var(--ink); font-size: 13px; font-weight: 700; }
+  .vd-cue { fill: var(--teal); }
+  .vd-cue-t { fill: #fff; font-size: 11px; font-weight: 700; }
+  [data-theme="dark"] .vd-cue-t { fill: #0f172a; }
+  .vd-o { fill: var(--orange); }
+  .vd-t { fill: var(--teal); }
+  .vd-v { fill: var(--violet); }
+  .vd-n { fill: var(--navy); }
+  .vd-eye { fill: #fff; }
+  @media (prefers-reduced-motion: reduce) {
+    .vd-ball { display: none; }
+  }
+</style>
+```
+
+:::details Director の構造化JSON出力例
 ```json:director-output.json
 {
   "assessment": {
@@ -208,6 +502,7 @@ Directorは会話を止めないよう2発話ごとに非同期で呼び、Promp
   "phaseReady": false
 }
 ```
+:::
 
 ただし「2人名指しで無関係な演者が答える」「演者が5人連続で話す」といった破綻はLLMだけでは防げません。次の話者を決める `nextSpeaker` の優先順位ルールと雑談のサイロ脱出を最上位に置き、LLM演出はその下で動かしています。
 
@@ -249,7 +544,7 @@ Directorは会話を止めないよう2発話ごとに非同期で呼び、Promp
 
 PoCやR&D、広告系の展示のようにタイトなスケジュールで体験を磨きたい現場では、思いついた改善をその場で作って展示中でもすぐデプロイできる恩恵は大きいです。
 
-最新モデルへすぐ乗り換える構成、TailscaleやCloudflare APIでAIが展示PCを触って監視できる環境、そして物理世界の音をテストデータとしてAIへ渡す仕組み――この3つを人間が整えると、CodingAgentとの展示制作がぐっと回りやすくなります。
+最新モデルへの乗り換え前提、TailscaleやCloudflare APIでAIが展示PCを触れる環境、物理の音を渡す検証データ、そして目的と境界を握るチーム設計――これらを人間が整えると、CodingAgentとの展示制作がぐっと回りやすくなります。
 
 With CodingAgentな展示制作の一つのやり方として参考になれば嬉しいです！展示コンテンツの中身や体験設計の振り返りは、また別の記事で書こうと思います。
 

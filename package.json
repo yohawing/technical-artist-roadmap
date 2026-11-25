@@ -9,6 +9,6 @@
     "lint:article": "node scripts/lint-article.mjs"
   },
   "dependencies": {
-    "zenn-cli": "^0.2.10"
+    "zenn-cli": "^0.5.15"
   }
 }

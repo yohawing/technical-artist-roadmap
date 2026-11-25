@@ -12,6 +12,7 @@ const RULES = {
   maxParagraphChars: 144,
   maxSectionChars: 500,
   maxHeadingChars: 20,
+  maxHtmlEmbedTextChars: 100,
   maxCharsWithoutVisual: 1100,
   minCharsBetweenVisuals: 60,
   maxAvgCharsPerVisual: 1200,
@@ -149,7 +150,8 @@ function lintArticle(filePath) {
 
   let inCodeFence = false;
   let codeFenceLine = 0;
-  let isMermaidFence = false;
+  let codeFenceType = "";
+  let htmlEmbedBuf = [];
   const containerStack = []; // { type: 'details' | 'message', line }
 
   let currentSection = { heading: "(導入)", line: i + 1, chars: 0, hasVisual: false, isReference: false };
@@ -157,6 +159,8 @@ function lintArticle(filePath) {
   let paragraphStartLine = 0;
   let charsSinceLastVisual = 0;
   let seenAnyVisual = false;
+  let lastLineWasImage = false;
+  let prevNonEmptyWasImage = false;
 
   const isInsideDetails = () => containerStack.some((c) => c.type === "details");
 
@@ -232,30 +236,98 @@ function lintArticle(filePath) {
     // コードフェンスの開閉
     if (/^```/.test(trimmed)) {
       flushParagraph();
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       if (!inCodeFence) {
         inCodeFence = true;
         codeFenceLine = lineNo;
-        isMermaidFence = /^```mermaid\b/.test(trimmed);
+        if (/^```mermaid\b/.test(trimmed)) {
+          codeFenceType = "mermaid";
+        } else if (/^```html-embed\b/.test(trimmed)) {
+          codeFenceType = "html-embed";
+          htmlEmbedBuf = [];
+        } else {
+          codeFenceType = "code";
+        }
       } else {
         inCodeFence = false;
-        if (isMermaidFence) {
+        if (codeFenceType === "mermaid") {
           recordVisual(codeFenceLine, "Mermaid図");
+        } else if (codeFenceType === "html-embed") {
+          const embedHtml = htmlEmbedBuf.join("\n");
+          const bytes = Buffer.byteLength(embedHtml, "utf8");
+          if (bytes > 50 * 1024) {
+            issues.push({
+              level: "error",
+              rule: "html-embed-size",
+              line: codeFenceLine,
+              message: `html-embed が50KB上限を超えています (${(bytes / 1024).toFixed(1)}KB)`,
+            });
+          }
+          if (/<script\b|\bon[a-z]+\s*=/i.test(embedHtml)) {
+            issues.push({
+              level: "error",
+              rule: "html-embed-js",
+              line: codeFenceLine,
+              message: "html-embed 内では JavaScript (<script> や on* 属性) は使用できません",
+            });
+          }
+          if (/<(html|head|body|iframe|form|button|textarea|select)\b/i.test(embedHtml)) {
+            issues.push({
+              level: "error",
+              rule: "html-embed-forbidden-tag",
+              line: codeFenceLine,
+              message: "html-embed 内で禁止されているHTMLタグが含まれています (html/head/body/iframe/form/button/textarea/select)",
+            });
+          }
+          if (!/data-theme\s*=\s*["']dark["']|light-dark\(/i.test(embedHtml)) {
+            issues.push({
+              level: "warn",
+              rule: "html-embed-dark-mode",
+              line: codeFenceLine,
+              message: "html-embed にダークモード対応 ([data-theme=\"dark\"] または light-dark()) が見つかりません",
+            });
+          }
+          const visibleEmbedText = embedHtml
+            .replace(/<style\b[\s\S]*?<\/style>/gi, "")
+            .replace(/<!--[\s\S]*?-->/g, "")
+            .replace(/<[^>]+>/g, " ")
+            .replace(/\s+/g, "")
+            .trim();
+          const embedTextLen = Array.from(visibleEmbedText).length;
+          if (embedTextLen > RULES.maxHtmlEmbedTextChars) {
+            issues.push({
+              level: "error",
+              rule: "html-embed-too-much-text",
+              line: codeFenceLine,
+              message: `html-embed 内の表示文字数が${embedTextLen}文字あります（上限${RULES.maxHtmlEmbedTextChars}文字）。図は思考の休憩所として文字を減らし、形やアイコンで直感的に伝えてください`,
+            });
+          }
+          recordVisual(codeFenceLine, "html-embed図");
         }
-        isMermaidFence = false;
+        codeFenceType = "";
+        htmlEmbedBuf = [];
       }
       continue;
     }
-    if (inCodeFence) continue;
+    if (inCodeFence) {
+      if (codeFenceType === "html-embed") htmlEmbedBuf.push(line);
+      continue;
+    }
 
     // Zenn コンテナ (:::details / :::message / :::)
     if (/^:::(details|message)\b/.test(trimmed)) {
       flushParagraph();
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       const type = trimmed.startsWith(":::details") ? "details" : "message";
       containerStack.push({ type, line: lineNo });
       continue;
     }
     if (trimmed === ":::") {
       flushParagraph();
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       if (containerStack.length === 0) {
         issues.push({ level: "error", rule: "container-unmatched", line: lineNo, message: "対応する開始のない ::: があります" });
       } else {
@@ -267,12 +339,15 @@ function lintArticle(filePath) {
     // 空行
     if (trimmed === "") {
       flushParagraph();
+      lastLineWasImage = false;
       continue;
     }
 
     // 水平線
     if (/^---+$/.test(trimmed)) {
       flushParagraph();
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       continue;
     }
 
@@ -280,6 +355,8 @@ function lintArticle(filePath) {
     const headingMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
     if (headingMatch) {
       flushSection();
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       const level = headingMatch[1].length;
       const title = headingMatch[2].trim();
       const titleLen = visibleTextLength(title);
@@ -338,14 +415,28 @@ function lintArticle(filePath) {
         }
       }
       recordVisual(lineNo, alt || src);
+      lastLineWasImage = true;
+      prevNonEmptyWasImage = true;
       continue;
     }
 
-    // 画像キャプション（単独の斜体行 *...*）
-    if (/^\*[^*].*[^*]\*$/.test(trimmed)) {
+    // 画像直下のキャプションテキストを禁止（空行なしテキスト、または直後の単独斜体行 *...* / _..._）
+    const isStandaloneItalic =
+      /^\*[^*].*[^*]\*$/.test(trimmed) || /^_[^_].*[^_]_$/.test(trimmed);
+    if (lastLineWasImage || (prevNonEmptyWasImage && isStandaloneItalic)) {
       flushParagraph();
+      issues.push({
+        level: "error",
+        rule: "image-caption-disallowed",
+        line: lineNo,
+        message: `画像の下にキャプションテキストは付けないでください: 「${trimmed.slice(0, 40)}」`,
+      });
+      lastLineWasImage = false;
+      prevNonEmptyWasImage = false;
       continue;
     }
+    lastLineWasImage = false;
+    prevNonEmptyWasImage = false;
 
     // Markdown 太字構文チェック（折りたたみ内外問わず全本文で検査）
     checkBoldSyntax(line, lineNo, issues);

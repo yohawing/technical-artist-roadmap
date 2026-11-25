@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "npx zenn preview",
-    "new:article": "npx zenn new:article"
+    "new:article": "npx zenn new:article",
+    "lint:article": "node scripts/lint-article.mjs"
   },
   "dependencies": {
     "zenn-cli": "^0.2.10"

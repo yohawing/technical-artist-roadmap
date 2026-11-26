@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npx zenn preview",
     "new:article": "npx zenn new:article",
-    "lint:article": "node scripts/lint-article.mjs"
+    "lint:article": "node scripts/lint-article.mjs",
+    "grade:diagram": "uv run scripts/grade-diagram.py"
   },
   "dependencies": {
     "zenn-cli": "^0.5.15"
